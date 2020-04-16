@@ -1,0 +1,137 @@
+﻿USE [VirtualTrainer]
+GO
+
+/****** Object:  StoredProcedure [dbo].[vt_live_LogPNOBreaches]    Script Date: 11/28/2016 10:43:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:        Ales Remta
+-- Create date: 04/2011
+-- Description:   
+-- Logs PNO breaches into the breach_log table. Potential breaches are retrieved
+-- regardless the total insurer outstanding amount, but only those with the amount
+-- other than 0 are logged. Cases with the amount of 0 are only logged in case
+-- they have been previously logged. This is to make sure that the case will get
+-- resolved.
+-- =============================================
+CREATE PROCEDURE [dbo].[vt_live_LogPNOBreaches]
+      -- Add the parameters for the stored procedure here
+
+AS
+BEGIN
+      -- SET NOCOUNT ON added to prevent extra result sets from
+      -- interfering with SELECT statements.
+      SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+      create table #temp(context_ref nvarchar(10), client_key int, outstanding money,
+                                    broker_office_key int, broker_key int,
+                                    handler_key int, product_target_name nvarchar(max),
+                                    renewal_date datetime, description nvarchar(max),
+                                    policy_no nvarchar(100), accepted_date datetime)
+      insert into #temp select distinct tr.policy_ref, tr.client_key, 
+                              tr.total_insurer_outstanding as outstanding, 
+                              p.policy_broker_office_key, p.policy_broker_key, p.policy_account_handler_key, 
+                              t.product_target_name, p.renewal_date_key as renewal_date, 
+                              s.description, p.insurer_policy_no as policy_no, 
+                              p.accepted_date_key as accepted_date 
+                              from Giles_BDW_History.acturis.policy p
+                              inner join Giles_BDW_History.acturis.policy_status s on (p.policy_status_key = s.policy_status_key)
+                              inner join Giles_BDW_History.acturis.broker_product_target t on (p.broker_product_target_key = t.broker_product_target_key)
+                              inner join Giles_BDW_History.acturis.[transaction] tr on (p.policy_key = tr.policy_key)
+                              inner join VirtualTrainer.dbo.vt_live_conf_active_rules r on p.policy_broker_office_key = r.office_key
+                              inner join Giles_BDW_History.acturis.broker_policy_type pt on (t.broker_policy_type_key = pt.broker_policy_type_key)
+                              inner join Giles_BDW_History.acturis.category c on (c.category_key = pt.category_key)
+                              where (p.insurer_policy_no is NULL
+                                    or p.insurer_policy_no like '%TBA%'
+                                    or p.insurer_policy_no like 'TBC%'
+                                    or p.insurer_policy_no like 'Not yet%'
+                                    or p.insurer_policy_no like '%Unknown%'
+                                    or p.insurer_policy_no like '%unknown%'
+                                    or p.insurer_policy_no like '%N/A%'
+                                    or p.insurer_policy_no = 'New'
+                                    or p.insurer_policy_no like '%MYA%'
+                                    or p.insurer_policy_no like '%T. B. A.%'
+                                    or p.insurer_policy_no = 't b a'
+                                    or p.insurer_policy_no = 'n y i'
+                                    or p.insurer_policy_no = 'to be confirmed'
+                                    or p.insurer_policy_no like '_'
+                                    or p.insurer_policy_no = '')
+                              and (s.description = 'Accepted' or s.description = 'Live')
+                              and p.cancellation_date_key is NULL
+                              and ((p.accepted_date_key > DATEADD(dd,-60,GETDATE()) and p.accepted_date_key <= DATEADD(dd,-30,GETDATE()))
+                                    or (p.accepted_date_key <= DATEADD(dd,-60,GETDATE()) and p.policy_ref in (select context_ref from VirtualTrainer.dbo.vt_live_breach_log where rule_code = 'PNO')))
+                              and t.product_target_name not like '%Add%'            -- No Add-Ons
+                              and c.category_name != 'Add On'
+                              and p.business_event_key <> 9 --no fees
+                              -- active rules setting
+                              and r.pno = 1
+                              -- excluded team setting
+                                    and p.policy_account_handler_key not in (
+                                          select member_key from VirtualTrainer.dbo.vt_live_conf_team
+                                          where member_type = 'h' and team_key in (
+                                                select team_key from VirtualTrainer.dbo.vt_live_conf_excl_team
+                                                where rule_code = 'PNO'
+                                          )
+                                    )
+                                    and p.policy_broker_office_key not in (
+                                          select member_key from VirtualTrainer.dbo.vt_live_conf_team
+                                          where member_type = 'o' and team_key in (
+                                                select team_key from VirtualTrainer.dbo.vt_live_conf_excl_team
+                                                where rule_code = 'PNO'
+                                          )
+                                    )
+                                    -- excluded product setting
+                                    and p.broker_product_target_key not in (
+                                          select product_key from VirtualTrainer.dbo.vt_live_conf_excl_product
+                                          where rule_code = 'PNO'
+                                    )
+                                    -- excluded agent setting
+                                    and p.policy_agent_key not in(
+                                          select agent_key from VirtualTrainer.dbo.vt_live_conf_excl_agent
+                                          where rule_code = 'PNO'
+                                    )
+
+      declare @context nvarchar(10)
+      declare @handler int
+      declare @office int
+    declare @broker int
+      declare @client int
+      declare @policy nvarchar(100)
+      declare @outst money
+      declare @product nvarchar(max)
+      declare @accepted datetime
+      
+      WHILE EXISTS(SELECT TOP 1 * FROM #TEMP) 
+            BEGIN 
+                  SELECT TOP 1 @context = context_ref, @handler = handler_key, @office = broker_office_key, @broker = broker_key, @client = client_key, @policy = policy_no, @outst = outstanding, @product = product_target_name, @accepted = accepted_date FROM #TEMP 
+
+                  --only log those that have outstanding amount other than 0 or have been logged previously
+                  IF (@outst <> 0 or (select count(context_ref) from dbo.vt_live_breach_log where context_ref=@context) > 0)
+                  BEGIN 
+                        INSERT INTO dbo.vt_live_breach_log (rule_code, context_ref, handler_key, office_key, team_key, broker_key, log_date) VALUES ('PNO', @context, @handler, @office, @office, @broker, getdate())
+                        IF (select count(*) from dbo.vt_live_pno_archive where context_ref = @context) = 0
+                              BEGIN
+                                    --insert into dbo.vt_live_archive (rule_code, context_ref, handler_key, office_key, log_date, log_count) values ('PNO', @context, @handler, @office, getdate(), 1)
+                                    insert into dbo.vt_live_pno_archive (context_ref, client_key, client_name, policy_no, outstanding, product_target_name, date_accepted) 
+                                                                              values (@context, @client, dbo.GetClientName(@client), @policy, @outst, @product, @accepted)
+                              END
+                        ELSE
+                              BEGIN
+                                    update dbo.vt_live_breach_log set handler_key = @handler, office_key = @office where rule_code='PNO' and context_ref=@context
+                                    update dbo.vt_live_pno_archive set outstanding=@outst, policy_no=@policy where context_ref=@context
+                              END
+                        DELETE from #TEMP where context_ref = @context
+                  END
+                  ELSE
+                        DELETE top(1) FROM #TEMP
+            END
+      DROP TABLE #TEMP
+
+END
+
+GO

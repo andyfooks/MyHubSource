@@ -1,0 +1,2100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A289E9C4-7446-4D4A-94FA-0CB33F9BCFE2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AJG.VirtualTrainer.MVC</RootNamespace>
+    <AssemblyName>AJG.VirtualTrainer.MVC</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kendo.Mvc, Version=2016.2.616.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\KENDOUIMVC\2016.3.1118.545\Kendo.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Antiforgery.1.0.0\lib\net451\Microsoft.AspNetCore.Antiforgery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Authorization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Authorization.1.0.0\lib\net451\Microsoft.AspNetCore.Authorization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cors, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cors.1.0.0\lib\net451\Microsoft.AspNetCore.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Cryptography.Internal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Cryptography.Internal.1.0.0\lib\net451\Microsoft.AspNetCore.Cryptography.Internal.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.1.0.0\lib\net451\Microsoft.AspNetCore.DataProtection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.DataProtection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.DataProtection.Abstractions.1.0.0\lib\net451\Microsoft.AspNetCore.DataProtection.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Diagnostics.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Diagnostics.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.AspNetCore.Diagnostics.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Abstractions.1.0.0\lib\net451\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Hosting.Server.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Hosting.Server.Abstractions.1.0.0\lib\net451\Microsoft.AspNetCore.Hosting.Server.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Html.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Html.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.AspNetCore.Html.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.1.0.0\lib\net451\Microsoft.AspNetCore.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.1.0.0\lib\net451\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Extensions.1.0.0\lib\net451\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.1.0.0\lib\net451\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.JsonPatch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.JsonPatch.1.0.0\lib\netstandard1.1\Microsoft.AspNetCore.JsonPatch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Localization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Localization.1.0.0\lib\net451\Microsoft.AspNetCore.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ApiExplorer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.ApiExplorer.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.ApiExplorer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Core.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Cors, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Cors.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.DataAnnotations, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.DataAnnotations.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.DataAnnotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Formatters.Json, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Formatters.Json.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Formatters.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Formatters.Xml.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Formatters.Xml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Localization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Localization.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Razor.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Razor.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Razor.Host.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.Razor.Host.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.TagHelpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.TagHelpers.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.TagHelpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.ViewFeatures, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.ViewFeatures.1.0.0\lib\net451\Microsoft.AspNetCore.Mvc.ViewFeatures.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Razor.1.0.0\lib\net451\Microsoft.AspNetCore.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Razor.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Razor.Runtime.1.0.0\lib\net451\Microsoft.AspNetCore.Razor.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.1.0.0\lib\net451\Microsoft.AspNetCore.Routing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.1.0.0\lib\net451\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.1.0.0\lib\net451\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.3.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.3.0\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.DotNet.InternalAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.DotNet.InternalAbstractions.1.0.0\lib\net451\Microsoft.DotNet.InternalAbstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.1.0.0\lib\net451\Microsoft.Extensions.Caching.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.0.0\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyModel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyModel.1.0.0\lib\net451\Microsoft.Extensions.DependencyModel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.FileProviders.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Composite, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Composite.1.0.0\lib\netstandard1.0\Microsoft.Extensions.FileProviders.Composite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileProviders.Physical, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileProviders.Physical.1.0.0\lib\net451\Microsoft.Extensions.FileProviders.Physical.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.FileSystemGlobbing, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.FileSystemGlobbing.1.0.0\lib\net451\Microsoft.Extensions.FileSystemGlobbing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Globalization.CultureInfoCache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Globalization.CultureInfoCache.1.0.0\lib\netstandard1.1\Microsoft.Extensions.Globalization.CultureInfoCache.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.1.0.0\lib\net451\Microsoft.Extensions.Localization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Localization.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Localization.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Localization.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.1.0.0\lib\netstandard1.1\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.1.0.0\lib\net451\Microsoft.Extensions.ObjectPool.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Options.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.PlatformAbstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.PlatformAbstractions.1.0.0\lib\net451\Microsoft.Extensions.PlatformAbstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.1.0.0\lib\netstandard1.0\Microsoft.Extensions.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.WebEncoders, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.WebEncoders.1.0.0\lib\netstandard1.0\Microsoft.Extensions.WebEncoders.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.1.0.0\lib\netstandard1.1\Microsoft.Net.Http.Headers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.0.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.1.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.TypeConverter.4.1.0\lib\net45\System.ComponentModel.TypeConverter.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.1.0\lib\net451\System.Data.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.0.0\lib\portable-net45+win8+wpa81\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Reflection.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.2.0\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.0.0\lib\netstandard1.0\System.Text.Encodings.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Attributes\Authorization.cs" />
+    <Compile Include="Auth\CustomRoleProvider.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\TechTimeSheetController.cs" />
+    <Compile Include="Controllers\MyHubController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MicroServiceController.cs" />
+    <Compile Include="CustomJsonValueProviderFactory.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="MyHub\ChartDto.cs" />
+    <Compile Include="MyHub\MyHubEnumerations.cs" />
+    <Compile Include="MyHub\MyHubPrinterSummary.cs" />
+    <Compile Include="MyHub\MyHubMobilePhoneSummary.cs" />
+    <Compile Include="MyHub\MyHubSystemSummaryBase.cs" />
+    <Compile Include="Other\MicroServiceTPSHelper.cs" />
+    <Compile Include="Other\MicroServiceActionFilter.cs" />
+    <Compile Include="Other\Helper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\drag.png" />
+    <Content Include="Content\Images\spinner.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Black\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Black\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\BlueOpal\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Bootstrap\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Default\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Default\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Default\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Default\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Default\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Default\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Default\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Fiori\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Flat\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\HighContrast\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\images\back.png" />
+    <Content Include="Content\kendo\2016.3.1118\images\kendoui.svg" />
+    <Content Include="Content\kendo\2016.3.1118\images\wp8_icons.png" />
+    <Content Include="Content\kendo\2016.3.1118\images\wp8_inverseicons.png" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.black.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.black.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.blueopal.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.blueopal.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.bootstrap.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.bootstrap.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-bootstrap.core.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-bootstrap.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-fiori.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-material.core.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-material.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-nova.core.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-nova.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-office365.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common.core.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.black.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.blueopal.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.default.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.fiori.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.flat.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.highcontrast.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.material.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.materialblack.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.metro.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.metroblack.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.moonlight.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.nova.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.office365.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.silver.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.uniform.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.default.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.default.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.fiori.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.fiori.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.flat.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.flat.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.highcontrast.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.highcontrast.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.material.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.material.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.materialblack.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.materialblack.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metro.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metro.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metroblack.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metroblack.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.all.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.android.dark.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.android.light.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.blackberry.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.common.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.fiori.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.flat.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.ios.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.material.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.meego.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.nova.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.office365.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.wp8.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.moonlight.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.moonlight.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.nova.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.nova.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.office365.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.office365.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.rtl.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.silver.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.silver.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.uniform.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.uniform.mobile.min.css" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\MaterialBlack\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Material\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Material\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Material\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Material\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Material\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Material\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Material\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\MetroBlack\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Metro\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Moonlight\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Nova\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Office365\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Silver\sprite_kpi_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\brushed-metal.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots1.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots10.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots11.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots12.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots13.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots2.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots3.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots4.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots5.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots6.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots7.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots8.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\dots9.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\glass-lighter.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\glass.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\highlight.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\hsv-gradient.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\hue.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\leather1.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\leather2.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\noise.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\stripe1.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\stripe2.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\stripe3.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\stripe4.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\stripe5.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\stripe6.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\transparency.png" />
+    <Content Include="Content\kendo\2016.3.1118\textures\transtexture.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\editor.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\imagebrowser.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\indeterminate.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\loading-image.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\loading.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\loading_2x.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\markers.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\markers_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\slider-h.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\slider-v.gif" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\sprite.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\sprite_2x.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\sprite_kpi.png" />
+    <Content Include="Content\kendo\2016.3.1118\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Content\MyHub.css" />
+    <Content Include="Content\rzslider.css" />
+    <Content Include="Content\rzslider.min.css" />
+    <Content Include="Content\tree-control-attribute.css" />
+    <Content Include="Content\tree-control.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\admin.js" />
+    <Content Include="Scripts\angular-animate.js" />
+    <Content Include="Scripts\angular-animate.min.js" />
+    <Content Include="Scripts\angular-aria.js" />
+    <Content Include="Scripts\angular-aria.min.js" />
+    <Content Include="Scripts\Charts\angular-chart.js" />
+    <Content Include="Scripts\Charts\angular-chart.min.js" />
+    <Content Include="Scripts\angular-cookies.js" />
+    <Content Include="Scripts\angular-cookies.min.js" />
+    <Content Include="Scripts\angular-csp.css" />
+    <Content Include="Scripts\angular-loader.js" />
+    <Content Include="Scripts\angular-loader.min.js" />
+    <Content Include="Scripts\angular-message-format.js" />
+    <Content Include="Scripts\angular-message-format.min.js" />
+    <Content Include="Scripts\angular-messages.js" />
+    <Content Include="Scripts\angular-messages.min.js" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular-parse-ext.js" />
+    <Content Include="Scripts\angular-parse-ext.min.js" />
+    <Content Include="Scripts\angular-resource.js" />
+    <Content Include="Scripts\angular-resource.min.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
+    <Content Include="Scripts\angular-sanitize.js" />
+    <Content Include="Scripts\angular-sanitize.min.js" />
+    <Content Include="Scripts\angular-touch.js" />
+    <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\application.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.black.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.black.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.blueopal.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.blueopal.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.bootstrap.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.bootstrap.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-bootstrap.core.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-bootstrap.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-fiori.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-material.core.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-material.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-nova.core.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-nova.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common-office365.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common.core.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.common.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.black.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.blueopal.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.bootstrap.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.default.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.fiori.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.flat.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.highcontrast.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.material.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.materialblack.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.metro.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.metroblack.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.moonlight.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.nova.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.office365.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.silver.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.dataviz.uniform.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.default.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.default.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.fiori.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.fiori.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.flat.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.flat.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.highcontrast.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.highcontrast.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.material.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.material.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.materialblack.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.materialblack.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metro.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metro.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metroblack.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.metroblack.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.all.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.android.dark.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.android.light.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.blackberry.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.common.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.fiori.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.flat.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.ios.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.material.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.meego.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.nova.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.office365.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.mobile.wp8.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.moonlight.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.moonlight.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.nova.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.nova.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.office365.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.office365.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.rtl.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.silver.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.silver.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.uniform.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\kendo.uniform.mobile.min.css.map" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="Content\kendo\2016.3.1118\images\kendoui.ttf" />
+    <Content Include="Content\kendo\2016.3.1118\images\kendoui.woff" />
+    <None Include="Properties\PublishProfiles\My Hub Prod 1.pubxml" />
+    <None Include="Properties\PublishProfiles\My Hub Prod 2.pubxml" />
+    <None Include="Properties\PublishProfiles\MY Hub Temp Pre Release.pubxml" />
+    <None Include="Properties\PublishProfiles\My Hub Test.pubxml" />
+    <Content Include="Scripts\Charts\Chart.js" />
+    <Content Include="Scripts\Charts\Chart.min.js" />
+    <Content Include="Scripts\Custom\AdminApp.js" />
+    <Content Include="Scripts\Custom\Helper.js" />
+    <Content Include="Scripts\Custom\TechTimeSheet.js" />
+    <Content Include="Scripts\Custom\MyHub\MyHubApp.js" />
+    <Content Include="Scripts\Custom\ProjectsController.js" />
+    <Content Include="Scripts\Custom\SystemLogsController.js" />
+    <Content Include="Scripts\Custom\SystemUsersController.js" />
+    <Content Include="Scripts\date.js" />
+    <Content Include="Scripts\errors.json" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\angular-touch.min.js.map" />
+    <Content Include="Scripts\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-resource.min.js.map" />
+    <Content Include="Scripts\angular-parse-ext.min.js.map" />
+    <Content Include="Scripts\angular-messages.min.js.map" />
+    <Content Include="Scripts\angular-message-format.min.js.map" />
+    <Content Include="Scripts\angular-loader.min.js.map" />
+    <Content Include="Scripts\angular-cookies.min.js.map" />
+    <Content Include="Scripts\angular-aria.min.js.map" />
+    <Content Include="Scripts\angular-animate.min.js.map" />
+    <None Include="Properties\PublishProfiles\My Hub UAT.pubxml" />
+    <None Include="Properties\PublishProfiles\MyHub Release.pubxml" />
+    <Content Include="Scripts\date.js.map" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\i18n\angular-locale_af-na.js" />
+    <Content Include="Scripts\i18n\angular-locale_af-za.js" />
+    <Content Include="Scripts\i18n\angular-locale_af.js" />
+    <Content Include="Scripts\i18n\angular-locale_agq-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_agq.js" />
+    <Content Include="Scripts\i18n\angular-locale_ak-gh.js" />
+    <Content Include="Scripts\i18n\angular-locale_ak.js" />
+    <Content Include="Scripts\i18n\angular-locale_am-et.js" />
+    <Content Include="Scripts\i18n\angular-locale_am.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-ae.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-bh.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-dj.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-dz.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-eg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-eh.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-er.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-il.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-iq.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-jo.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-km.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-kw.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-lb.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-ly.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-ma.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-mr.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-om.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-ps.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-qa.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-sa.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-sd.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-so.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-ss.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-sy.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-td.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-tn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-xb.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar-ye.js" />
+    <Content Include="Scripts\i18n\angular-locale_ar.js" />
+    <Content Include="Scripts\i18n\angular-locale_as-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_as.js" />
+    <Content Include="Scripts\i18n\angular-locale_asa-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_asa.js" />
+    <Content Include="Scripts\i18n\angular-locale_ast-es.js" />
+    <Content Include="Scripts\i18n\angular-locale_ast.js" />
+    <Content Include="Scripts\i18n\angular-locale_az-cyrl-az.js" />
+    <Content Include="Scripts\i18n\angular-locale_az-cyrl.js" />
+    <Content Include="Scripts\i18n\angular-locale_az-latn-az.js" />
+    <Content Include="Scripts\i18n\angular-locale_az-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_az.js" />
+    <Content Include="Scripts\i18n\angular-locale_bas-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_bas.js" />
+    <Content Include="Scripts\i18n\angular-locale_be-by.js" />
+    <Content Include="Scripts\i18n\angular-locale_be.js" />
+    <Content Include="Scripts\i18n\angular-locale_bem-zm.js" />
+    <Content Include="Scripts\i18n\angular-locale_bem.js" />
+    <Content Include="Scripts\i18n\angular-locale_bez-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_bez.js" />
+    <Content Include="Scripts\i18n\angular-locale_bg-bg.js" />
+    <Content Include="Scripts\i18n\angular-locale_bg.js" />
+    <Content Include="Scripts\i18n\angular-locale_bm-ml.js" />
+    <Content Include="Scripts\i18n\angular-locale_bm.js" />
+    <Content Include="Scripts\i18n\angular-locale_bn-bd.js" />
+    <Content Include="Scripts\i18n\angular-locale_bn-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_bn.js" />
+    <Content Include="Scripts\i18n\angular-locale_bo-cn.js" />
+    <Content Include="Scripts\i18n\angular-locale_bo-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_bo.js" />
+    <Content Include="Scripts\i18n\angular-locale_br-fr.js" />
+    <Content Include="Scripts\i18n\angular-locale_br.js" />
+    <Content Include="Scripts\i18n\angular-locale_brx-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_brx.js" />
+    <Content Include="Scripts\i18n\angular-locale_bs-cyrl-ba.js" />
+    <Content Include="Scripts\i18n\angular-locale_bs-cyrl.js" />
+    <Content Include="Scripts\i18n\angular-locale_bs-latn-ba.js" />
+    <Content Include="Scripts\i18n\angular-locale_bs-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_bs.js" />
+    <Content Include="Scripts\i18n\angular-locale_ca-ad.js" />
+    <Content Include="Scripts\i18n\angular-locale_ca-es-valencia.js" />
+    <Content Include="Scripts\i18n\angular-locale_ca-es.js" />
+    <Content Include="Scripts\i18n\angular-locale_ca-fr.js" />
+    <Content Include="Scripts\i18n\angular-locale_ca-it.js" />
+    <Content Include="Scripts\i18n\angular-locale_ca.js" />
+    <Content Include="Scripts\i18n\angular-locale_ce-ru.js" />
+    <Content Include="Scripts\i18n\angular-locale_ce.js" />
+    <Content Include="Scripts\i18n\angular-locale_cgg-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_cgg.js" />
+    <Content Include="Scripts\i18n\angular-locale_chr-us.js" />
+    <Content Include="Scripts\i18n\angular-locale_chr.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-arab-iq.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-arab-ir.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-arab.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-iq.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-ir.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-latn-iq.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ckb.js" />
+    <Content Include="Scripts\i18n\angular-locale_cs-cz.js" />
+    <Content Include="Scripts\i18n\angular-locale_cs.js" />
+    <Content Include="Scripts\i18n\angular-locale_cu-ru.js" />
+    <Content Include="Scripts\i18n\angular-locale_cu.js" />
+    <Content Include="Scripts\i18n\angular-locale_cy-gb.js" />
+    <Content Include="Scripts\i18n\angular-locale_cy.js" />
+    <Content Include="Scripts\i18n\angular-locale_da-dk.js" />
+    <Content Include="Scripts\i18n\angular-locale_da-gl.js" />
+    <Content Include="Scripts\i18n\angular-locale_da.js" />
+    <Content Include="Scripts\i18n\angular-locale_dav-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_dav.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-at.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-be.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-it.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-li.js" />
+    <Content Include="Scripts\i18n\angular-locale_de-lu.js" />
+    <Content Include="Scripts\i18n\angular-locale_de.js" />
+    <Content Include="Scripts\i18n\angular-locale_dje-ne.js" />
+    <Content Include="Scripts\i18n\angular-locale_dje.js" />
+    <Content Include="Scripts\i18n\angular-locale_dsb-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_dsb.js" />
+    <Content Include="Scripts\i18n\angular-locale_dua-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_dua.js" />
+    <Content Include="Scripts\i18n\angular-locale_dyo-sn.js" />
+    <Content Include="Scripts\i18n\angular-locale_dyo.js" />
+    <Content Include="Scripts\i18n\angular-locale_dz-bt.js" />
+    <Content Include="Scripts\i18n\angular-locale_dz.js" />
+    <Content Include="Scripts\i18n\angular-locale_ebu-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_ebu.js" />
+    <Content Include="Scripts\i18n\angular-locale_ee-gh.js" />
+    <Content Include="Scripts\i18n\angular-locale_ee-tg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ee.js" />
+    <Content Include="Scripts\i18n\angular-locale_el-cy.js" />
+    <Content Include="Scripts\i18n\angular-locale_el-gr.js" />
+    <Content Include="Scripts\i18n\angular-locale_el.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-150.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ag.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ai.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-as.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-at.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-au.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-bb.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-be.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-bi.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-bm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-bs.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-bw.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-bz.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ca.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-cc.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ck.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-cx.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-cy.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-dg.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-dk.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-dm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-er.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-fj.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-fk.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-fm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gb.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gd.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gg.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gh.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gi.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gu.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-gy.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-hk.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ie.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-il.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-im.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-io.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-iso.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-je.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-jm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ki.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-kn.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ky.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-lc.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-lr.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ls.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mg.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mh.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mo.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mp.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ms.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mt.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mu.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-mw.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-my.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-na.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-nf.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ng.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-nl.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-nr.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-nu.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-nz.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-pg.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ph.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-pk.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-pn.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-pr.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-pw.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-rw.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sb.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sc.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sd.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-se.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sg.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sh.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-si.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sl.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ss.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sx.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-sz.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-tc.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-tk.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-to.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-tt.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-tv.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-um.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-us-posix.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-us.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-vc.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-vg.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-vi.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-vu.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-ws.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-xa.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-za.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-zm.js" />
+    <Content Include="Scripts\i18n\angular-locale_en-zw.js" />
+    <Content Include="Scripts\i18n\angular-locale_en.js" />
+    <Content Include="Scripts\i18n\angular-locale_eo-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_eo.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-419.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ar.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-bo.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-br.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-bz.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-cl.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-co.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-cr.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-cu.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-do.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ea.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ec.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-es.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-gq.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-gt.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-hn.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ic.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-mx.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ni.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-pa.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-pe.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ph.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-pr.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-py.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-sv.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-us.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-uy.js" />
+    <Content Include="Scripts\i18n\angular-locale_es-ve.js" />
+    <Content Include="Scripts\i18n\angular-locale_es.js" />
+    <Content Include="Scripts\i18n\angular-locale_et-ee.js" />
+    <Content Include="Scripts\i18n\angular-locale_et.js" />
+    <Content Include="Scripts\i18n\angular-locale_eu-es.js" />
+    <Content Include="Scripts\i18n\angular-locale_eu.js" />
+    <Content Include="Scripts\i18n\angular-locale_ewo-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_ewo.js" />
+    <Content Include="Scripts\i18n\angular-locale_fa-af.js" />
+    <Content Include="Scripts\i18n\angular-locale_fa-ir.js" />
+    <Content Include="Scripts\i18n\angular-locale_fa.js" />
+    <Content Include="Scripts\i18n\angular-locale_ff-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_ff-gn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ff-mr.js" />
+    <Content Include="Scripts\i18n\angular-locale_ff-sn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ff.js" />
+    <Content Include="Scripts\i18n\angular-locale_fi-fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_fil-ph.js" />
+    <Content Include="Scripts\i18n\angular-locale_fil.js" />
+    <Content Include="Scripts\i18n\angular-locale_fo-dk.js" />
+    <Content Include="Scripts\i18n\angular-locale_fo-fo.js" />
+    <Content Include="Scripts\i18n\angular-locale_fo.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-be.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-bf.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-bi.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-bj.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-bl.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ca.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-cd.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-cf.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-cg.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ci.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-dj.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-dz.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-fr.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ga.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-gf.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-gn.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-gp.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-gq.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ht.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-km.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-lu.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ma.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-mc.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-mf.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-mg.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ml.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-mq.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-mr.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-mu.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-nc.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-ne.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-pf.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-pm.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-re.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-rw.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-sc.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-sn.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-sy.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-td.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-tg.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-tn.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-vu.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-wf.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr-yt.js" />
+    <Content Include="Scripts\i18n\angular-locale_fr.js" />
+    <Content Include="Scripts\i18n\angular-locale_fur-it.js" />
+    <Content Include="Scripts\i18n\angular-locale_fur.js" />
+    <Content Include="Scripts\i18n\angular-locale_fy-nl.js" />
+    <Content Include="Scripts\i18n\angular-locale_fy.js" />
+    <Content Include="Scripts\i18n\angular-locale_ga-ie.js" />
+    <Content Include="Scripts\i18n\angular-locale_ga.js" />
+    <Content Include="Scripts\i18n\angular-locale_gd-gb.js" />
+    <Content Include="Scripts\i18n\angular-locale_gd.js" />
+    <Content Include="Scripts\i18n\angular-locale_gl-es.js" />
+    <Content Include="Scripts\i18n\angular-locale_gl.js" />
+    <Content Include="Scripts\i18n\angular-locale_gsw-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_gsw-fr.js" />
+    <Content Include="Scripts\i18n\angular-locale_gsw-li.js" />
+    <Content Include="Scripts\i18n\angular-locale_gsw.js" />
+    <Content Include="Scripts\i18n\angular-locale_gu-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_gu.js" />
+    <Content Include="Scripts\i18n\angular-locale_guz-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_guz.js" />
+    <Content Include="Scripts\i18n\angular-locale_gv-im.js" />
+    <Content Include="Scripts\i18n\angular-locale_gv.js" />
+    <Content Include="Scripts\i18n\angular-locale_ha-gh.js" />
+    <Content Include="Scripts\i18n\angular-locale_ha-ne.js" />
+    <Content Include="Scripts\i18n\angular-locale_ha-ng.js" />
+    <Content Include="Scripts\i18n\angular-locale_ha.js" />
+    <Content Include="Scripts\i18n\angular-locale_haw-us.js" />
+    <Content Include="Scripts\i18n\angular-locale_haw.js" />
+    <Content Include="Scripts\i18n\angular-locale_he-il.js" />
+    <Content Include="Scripts\i18n\angular-locale_he.js" />
+    <Content Include="Scripts\i18n\angular-locale_hi-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_hi.js" />
+    <Content Include="Scripts\i18n\angular-locale_hr-ba.js" />
+    <Content Include="Scripts\i18n\angular-locale_hr-hr.js" />
+    <Content Include="Scripts\i18n\angular-locale_hr.js" />
+    <Content Include="Scripts\i18n\angular-locale_hsb-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_hsb.js" />
+    <Content Include="Scripts\i18n\angular-locale_hu-hu.js" />
+    <Content Include="Scripts\i18n\angular-locale_hu.js" />
+    <Content Include="Scripts\i18n\angular-locale_hy-am.js" />
+    <Content Include="Scripts\i18n\angular-locale_hy.js" />
+    <Content Include="Scripts\i18n\angular-locale_id-id.js" />
+    <Content Include="Scripts\i18n\angular-locale_id.js" />
+    <Content Include="Scripts\i18n\angular-locale_ig-ng.js" />
+    <Content Include="Scripts\i18n\angular-locale_ig.js" />
+    <Content Include="Scripts\i18n\angular-locale_ii-cn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ii.js" />
+    <Content Include="Scripts\i18n\angular-locale_in.js" />
+    <Content Include="Scripts\i18n\angular-locale_is-is.js" />
+    <Content Include="Scripts\i18n\angular-locale_is.js" />
+    <Content Include="Scripts\i18n\angular-locale_it-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_it-it.js" />
+    <Content Include="Scripts\i18n\angular-locale_it-sm.js" />
+    <Content Include="Scripts\i18n\angular-locale_it-va.js" />
+    <Content Include="Scripts\i18n\angular-locale_it.js" />
+    <Content Include="Scripts\i18n\angular-locale_iw.js" />
+    <Content Include="Scripts\i18n\angular-locale_ja-jp.js" />
+    <Content Include="Scripts\i18n\angular-locale_ja.js" />
+    <Content Include="Scripts\i18n\angular-locale_jgo-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_jgo.js" />
+    <Content Include="Scripts\i18n\angular-locale_jmc-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_jmc.js" />
+    <Content Include="Scripts\i18n\angular-locale_ka-ge.js" />
+    <Content Include="Scripts\i18n\angular-locale_ka.js" />
+    <Content Include="Scripts\i18n\angular-locale_kab-dz.js" />
+    <Content Include="Scripts\i18n\angular-locale_kab.js" />
+    <Content Include="Scripts\i18n\angular-locale_kam-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_kam.js" />
+    <Content Include="Scripts\i18n\angular-locale_kde-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_kde.js" />
+    <Content Include="Scripts\i18n\angular-locale_kea-cv.js" />
+    <Content Include="Scripts\i18n\angular-locale_kea.js" />
+    <Content Include="Scripts\i18n\angular-locale_khq-ml.js" />
+    <Content Include="Scripts\i18n\angular-locale_khq.js" />
+    <Content Include="Scripts\i18n\angular-locale_ki-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_ki.js" />
+    <Content Include="Scripts\i18n\angular-locale_kk-kz.js" />
+    <Content Include="Scripts\i18n\angular-locale_kk.js" />
+    <Content Include="Scripts\i18n\angular-locale_kkj-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_kkj.js" />
+    <Content Include="Scripts\i18n\angular-locale_kl-gl.js" />
+    <Content Include="Scripts\i18n\angular-locale_kl.js" />
+    <Content Include="Scripts\i18n\angular-locale_kln-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_kln.js" />
+    <Content Include="Scripts\i18n\angular-locale_km-kh.js" />
+    <Content Include="Scripts\i18n\angular-locale_km.js" />
+    <Content Include="Scripts\i18n\angular-locale_kn-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_kn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ko-kp.js" />
+    <Content Include="Scripts\i18n\angular-locale_ko-kr.js" />
+    <Content Include="Scripts\i18n\angular-locale_ko.js" />
+    <Content Include="Scripts\i18n\angular-locale_kok-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_kok.js" />
+    <Content Include="Scripts\i18n\angular-locale_ks-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_ks.js" />
+    <Content Include="Scripts\i18n\angular-locale_ksb-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_ksb.js" />
+    <Content Include="Scripts\i18n\angular-locale_ksf-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_ksf.js" />
+    <Content Include="Scripts\i18n\angular-locale_ksh-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_ksh.js" />
+    <Content Include="Scripts\i18n\angular-locale_kw-gb.js" />
+    <Content Include="Scripts\i18n\angular-locale_kw.js" />
+    <Content Include="Scripts\i18n\angular-locale_ky-kg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ky.js" />
+    <Content Include="Scripts\i18n\angular-locale_lag-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_lag.js" />
+    <Content Include="Scripts\i18n\angular-locale_lb-lu.js" />
+    <Content Include="Scripts\i18n\angular-locale_lb.js" />
+    <Content Include="Scripts\i18n\angular-locale_lg-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_lg.js" />
+    <Content Include="Scripts\i18n\angular-locale_lkt-us.js" />
+    <Content Include="Scripts\i18n\angular-locale_lkt.js" />
+    <Content Include="Scripts\i18n\angular-locale_ln-ao.js" />
+    <Content Include="Scripts\i18n\angular-locale_ln-cd.js" />
+    <Content Include="Scripts\i18n\angular-locale_ln-cf.js" />
+    <Content Include="Scripts\i18n\angular-locale_ln-cg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ln.js" />
+    <Content Include="Scripts\i18n\angular-locale_lo-la.js" />
+    <Content Include="Scripts\i18n\angular-locale_lo.js" />
+    <Content Include="Scripts\i18n\angular-locale_lrc-iq.js" />
+    <Content Include="Scripts\i18n\angular-locale_lrc-ir.js" />
+    <Content Include="Scripts\i18n\angular-locale_lrc.js" />
+    <Content Include="Scripts\i18n\angular-locale_lt-lt.js" />
+    <Content Include="Scripts\i18n\angular-locale_lt.js" />
+    <Content Include="Scripts\i18n\angular-locale_lu-cd.js" />
+    <Content Include="Scripts\i18n\angular-locale_lu.js" />
+    <Content Include="Scripts\i18n\angular-locale_luo-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_luo.js" />
+    <Content Include="Scripts\i18n\angular-locale_luy-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_luy.js" />
+    <Content Include="Scripts\i18n\angular-locale_lv-lv.js" />
+    <Content Include="Scripts\i18n\angular-locale_lv.js" />
+    <Content Include="Scripts\i18n\angular-locale_mas-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_mas-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_mas.js" />
+    <Content Include="Scripts\i18n\angular-locale_mer-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_mer.js" />
+    <Content Include="Scripts\i18n\angular-locale_mfe-mu.js" />
+    <Content Include="Scripts\i18n\angular-locale_mfe.js" />
+    <Content Include="Scripts\i18n\angular-locale_mg-mg.js" />
+    <Content Include="Scripts\i18n\angular-locale_mg.js" />
+    <Content Include="Scripts\i18n\angular-locale_mgh-mz.js" />
+    <Content Include="Scripts\i18n\angular-locale_mgh.js" />
+    <Content Include="Scripts\i18n\angular-locale_mgo-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_mgo.js" />
+    <Content Include="Scripts\i18n\angular-locale_mk-mk.js" />
+    <Content Include="Scripts\i18n\angular-locale_mk.js" />
+    <Content Include="Scripts\i18n\angular-locale_ml-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_ml.js" />
+    <Content Include="Scripts\i18n\angular-locale_mn-mn.js" />
+    <Content Include="Scripts\i18n\angular-locale_mn.js" />
+    <Content Include="Scripts\i18n\angular-locale_mo.js" />
+    <Content Include="Scripts\i18n\angular-locale_mr-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_mr.js" />
+    <Content Include="Scripts\i18n\angular-locale_ms-bn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ms-my.js" />
+    <Content Include="Scripts\i18n\angular-locale_ms-sg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ms.js" />
+    <Content Include="Scripts\i18n\angular-locale_mt-mt.js" />
+    <Content Include="Scripts\i18n\angular-locale_mt.js" />
+    <Content Include="Scripts\i18n\angular-locale_mua-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_mua.js" />
+    <Content Include="Scripts\i18n\angular-locale_my-mm.js" />
+    <Content Include="Scripts\i18n\angular-locale_my.js" />
+    <Content Include="Scripts\i18n\angular-locale_mzn-ir.js" />
+    <Content Include="Scripts\i18n\angular-locale_mzn.js" />
+    <Content Include="Scripts\i18n\angular-locale_naq-na.js" />
+    <Content Include="Scripts\i18n\angular-locale_naq.js" />
+    <Content Include="Scripts\i18n\angular-locale_nb-no.js" />
+    <Content Include="Scripts\i18n\angular-locale_nb-sj.js" />
+    <Content Include="Scripts\i18n\angular-locale_nb.js" />
+    <Content Include="Scripts\i18n\angular-locale_nd-zw.js" />
+    <Content Include="Scripts\i18n\angular-locale_nd.js" />
+    <Content Include="Scripts\i18n\angular-locale_nds-de.js" />
+    <Content Include="Scripts\i18n\angular-locale_nds-nl.js" />
+    <Content Include="Scripts\i18n\angular-locale_nds.js" />
+    <Content Include="Scripts\i18n\angular-locale_ne-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_ne-np.js" />
+    <Content Include="Scripts\i18n\angular-locale_ne.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-aw.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-be.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-bq.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-cw.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-nl.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-sr.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl-sx.js" />
+    <Content Include="Scripts\i18n\angular-locale_nl.js" />
+    <Content Include="Scripts\i18n\angular-locale_nmg-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_nmg.js" />
+    <Content Include="Scripts\i18n\angular-locale_nn-no.js" />
+    <Content Include="Scripts\i18n\angular-locale_nn.js" />
+    <Content Include="Scripts\i18n\angular-locale_nnh-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_nnh.js" />
+    <Content Include="Scripts\i18n\angular-locale_no-no.js" />
+    <Content Include="Scripts\i18n\angular-locale_no.js" />
+    <Content Include="Scripts\i18n\angular-locale_nus-ss.js" />
+    <Content Include="Scripts\i18n\angular-locale_nus.js" />
+    <Content Include="Scripts\i18n\angular-locale_nyn-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_nyn.js" />
+    <Content Include="Scripts\i18n\angular-locale_om-et.js" />
+    <Content Include="Scripts\i18n\angular-locale_om-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_om.js" />
+    <Content Include="Scripts\i18n\angular-locale_or-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_or.js" />
+    <Content Include="Scripts\i18n\angular-locale_os-ge.js" />
+    <Content Include="Scripts\i18n\angular-locale_os-ru.js" />
+    <Content Include="Scripts\i18n\angular-locale_os.js" />
+    <Content Include="Scripts\i18n\angular-locale_pa-arab-pk.js" />
+    <Content Include="Scripts\i18n\angular-locale_pa-arab.js" />
+    <Content Include="Scripts\i18n\angular-locale_pa-guru-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_pa-guru.js" />
+    <Content Include="Scripts\i18n\angular-locale_pa.js" />
+    <Content Include="Scripts\i18n\angular-locale_pl-pl.js" />
+    <Content Include="Scripts\i18n\angular-locale_pl.js" />
+    <Content Include="Scripts\i18n\angular-locale_prg-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_prg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ps-af.js" />
+    <Content Include="Scripts\i18n\angular-locale_ps.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-ao.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-br.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-cv.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-gq.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-gw.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-lu.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-mo.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-mz.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-pt.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-st.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt-tl.js" />
+    <Content Include="Scripts\i18n\angular-locale_pt.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu-bo.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu-ec.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu-pe.js" />
+    <Content Include="Scripts\i18n\angular-locale_qu.js" />
+    <Content Include="Scripts\i18n\angular-locale_rm-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_rm.js" />
+    <Content Include="Scripts\i18n\angular-locale_rn-bi.js" />
+    <Content Include="Scripts\i18n\angular-locale_rn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ro-md.js" />
+    <Content Include="Scripts\i18n\angular-locale_ro-ro.js" />
+    <Content Include="Scripts\i18n\angular-locale_ro.js" />
+    <Content Include="Scripts\i18n\angular-locale_rof-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_rof.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru-by.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru-kg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru-kz.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru-md.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru-ru.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru-ua.js" />
+    <Content Include="Scripts\i18n\angular-locale_ru.js" />
+    <Content Include="Scripts\i18n\angular-locale_rw-rw.js" />
+    <Content Include="Scripts\i18n\angular-locale_rw.js" />
+    <Content Include="Scripts\i18n\angular-locale_rwk-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_rwk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sah-ru.js" />
+    <Content Include="Scripts\i18n\angular-locale_sah.js" />
+    <Content Include="Scripts\i18n\angular-locale_saq-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_saq.js" />
+    <Content Include="Scripts\i18n\angular-locale_sbp-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_sbp.js" />
+    <Content Include="Scripts\i18n\angular-locale_se-fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_se-no.js" />
+    <Content Include="Scripts\i18n\angular-locale_se-se.js" />
+    <Content Include="Scripts\i18n\angular-locale_se.js" />
+    <Content Include="Scripts\i18n\angular-locale_seh-mz.js" />
+    <Content Include="Scripts\i18n\angular-locale_seh.js" />
+    <Content Include="Scripts\i18n\angular-locale_ses-ml.js" />
+    <Content Include="Scripts\i18n\angular-locale_ses.js" />
+    <Content Include="Scripts\i18n\angular-locale_sg-cf.js" />
+    <Content Include="Scripts\i18n\angular-locale_sg.js" />
+    <Content Include="Scripts\i18n\angular-locale_sh.js" />
+    <Content Include="Scripts\i18n\angular-locale_shi-latn-ma.js" />
+    <Content Include="Scripts\i18n\angular-locale_shi-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_shi-tfng-ma.js" />
+    <Content Include="Scripts\i18n\angular-locale_shi-tfng.js" />
+    <Content Include="Scripts\i18n\angular-locale_shi.js" />
+    <Content Include="Scripts\i18n\angular-locale_si-lk.js" />
+    <Content Include="Scripts\i18n\angular-locale_si.js" />
+    <Content Include="Scripts\i18n\angular-locale_sk-sk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sl-si.js" />
+    <Content Include="Scripts\i18n\angular-locale_sl.js" />
+    <Content Include="Scripts\i18n\angular-locale_smn-fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_smn.js" />
+    <Content Include="Scripts\i18n\angular-locale_sn-zw.js" />
+    <Content Include="Scripts\i18n\angular-locale_sn.js" />
+    <Content Include="Scripts\i18n\angular-locale_so-dj.js" />
+    <Content Include="Scripts\i18n\angular-locale_so-et.js" />
+    <Content Include="Scripts\i18n\angular-locale_so-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_so-so.js" />
+    <Content Include="Scripts\i18n\angular-locale_so.js" />
+    <Content Include="Scripts\i18n\angular-locale_sq-al.js" />
+    <Content Include="Scripts\i18n\angular-locale_sq-mk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sq-xk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sq.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-cyrl-ba.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-cyrl-me.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-cyrl-rs.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-cyrl-xk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-cyrl.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-latn-ba.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-latn-me.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-latn-rs.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-latn-xk.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_sr.js" />
+    <Content Include="Scripts\i18n\angular-locale_sv-ax.js" />
+    <Content Include="Scripts\i18n\angular-locale_sv-fi.js" />
+    <Content Include="Scripts\i18n\angular-locale_sv-se.js" />
+    <Content Include="Scripts\i18n\angular-locale_sv.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw-cd.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_sw.js" />
+    <Content Include="Scripts\i18n\angular-locale_ta-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_ta-lk.js" />
+    <Content Include="Scripts\i18n\angular-locale_ta-my.js" />
+    <Content Include="Scripts\i18n\angular-locale_ta-sg.js" />
+    <Content Include="Scripts\i18n\angular-locale_ta.js" />
+    <Content Include="Scripts\i18n\angular-locale_te-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_te.js" />
+    <Content Include="Scripts\i18n\angular-locale_teo-ke.js" />
+    <Content Include="Scripts\i18n\angular-locale_teo-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_teo.js" />
+    <Content Include="Scripts\i18n\angular-locale_th-th.js" />
+    <Content Include="Scripts\i18n\angular-locale_th.js" />
+    <Content Include="Scripts\i18n\angular-locale_ti-er.js" />
+    <Content Include="Scripts\i18n\angular-locale_ti-et.js" />
+    <Content Include="Scripts\i18n\angular-locale_ti.js" />
+    <Content Include="Scripts\i18n\angular-locale_tk-tm.js" />
+    <Content Include="Scripts\i18n\angular-locale_tk.js" />
+    <Content Include="Scripts\i18n\angular-locale_tl.js" />
+    <Content Include="Scripts\i18n\angular-locale_to-to.js" />
+    <Content Include="Scripts\i18n\angular-locale_to.js" />
+    <Content Include="Scripts\i18n\angular-locale_tr-cy.js" />
+    <Content Include="Scripts\i18n\angular-locale_tr-tr.js" />
+    <Content Include="Scripts\i18n\angular-locale_tr.js" />
+    <Content Include="Scripts\i18n\angular-locale_twq-ne.js" />
+    <Content Include="Scripts\i18n\angular-locale_twq.js" />
+    <Content Include="Scripts\i18n\angular-locale_tzm-ma.js" />
+    <Content Include="Scripts\i18n\angular-locale_tzm.js" />
+    <Content Include="Scripts\i18n\angular-locale_ug-cn.js" />
+    <Content Include="Scripts\i18n\angular-locale_ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_uk-ua.js" />
+    <Content Include="Scripts\i18n\angular-locale_uk.js" />
+    <Content Include="Scripts\i18n\angular-locale_ur-in.js" />
+    <Content Include="Scripts\i18n\angular-locale_ur-pk.js" />
+    <Content Include="Scripts\i18n\angular-locale_ur.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz-arab-af.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz-arab.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz-cyrl-uz.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz-cyrl.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz-latn-uz.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_uz.js" />
+    <Content Include="Scripts\i18n\angular-locale_vai-latn-lr.js" />
+    <Content Include="Scripts\i18n\angular-locale_vai-latn.js" />
+    <Content Include="Scripts\i18n\angular-locale_vai-vaii-lr.js" />
+    <Content Include="Scripts\i18n\angular-locale_vai-vaii.js" />
+    <Content Include="Scripts\i18n\angular-locale_vai.js" />
+    <Content Include="Scripts\i18n\angular-locale_vi-vn.js" />
+    <Content Include="Scripts\i18n\angular-locale_vi.js" />
+    <Content Include="Scripts\i18n\angular-locale_vo-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_vo.js" />
+    <Content Include="Scripts\i18n\angular-locale_vun-tz.js" />
+    <Content Include="Scripts\i18n\angular-locale_vun.js" />
+    <Content Include="Scripts\i18n\angular-locale_wae-ch.js" />
+    <Content Include="Scripts\i18n\angular-locale_wae.js" />
+    <Content Include="Scripts\i18n\angular-locale_xog-ug.js" />
+    <Content Include="Scripts\i18n\angular-locale_xog.js" />
+    <Content Include="Scripts\i18n\angular-locale_yav-cm.js" />
+    <Content Include="Scripts\i18n\angular-locale_yav.js" />
+    <Content Include="Scripts\i18n\angular-locale_yi-001.js" />
+    <Content Include="Scripts\i18n\angular-locale_yi.js" />
+    <Content Include="Scripts\i18n\angular-locale_yo-bj.js" />
+    <Content Include="Scripts\i18n\angular-locale_yo-ng.js" />
+    <Content Include="Scripts\i18n\angular-locale_yo.js" />
+    <Content Include="Scripts\i18n\angular-locale_yue-hk.js" />
+    <Content Include="Scripts\i18n\angular-locale_yue.js" />
+    <Content Include="Scripts\i18n\angular-locale_zgh-ma.js" />
+    <Content Include="Scripts\i18n\angular-locale_zgh.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-cn.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hans-cn.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hans-hk.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hans-mo.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hans-sg.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hans.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hant-hk.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hant-mo.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hant-tw.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hant.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-hk.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh-tw.js" />
+    <Content Include="Scripts\i18n\angular-locale_zh.js" />
+    <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
+    <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kendo.modernizr.custom.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\angular.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\jquery.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\jszip.min.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.all-vsdoc.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.all.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.all.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.angular.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.angular2.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.autocomplete.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.binder.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.button.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.calendar.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.color.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.colorpicker.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.columnmenu.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.columnsorter.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.combobox.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.core.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.odata.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.signalr.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.xml.min.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.dataviz-vsdoc.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.barcode.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.chart.funnel.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.chart.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.chart.polar.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.core.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.diagram.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.gauge.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.map.min.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.dataviz.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.mobile.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.qrcode.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.sparkline.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.stock.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.themes.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.treemap.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.datepicker.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.datetimepicker.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dialog.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dom.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.draganddrop.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.drawing.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dropdownlist.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.editable.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.editor.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.excel.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.filebrowser.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.filtercell.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.filtermenu.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.fx.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.gantt.list.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.gantt.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.gantt.timeline.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.grid.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.groupable.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.imagebrowser.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.list.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.listview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.maskedtextbox.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mediaplayer.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.menu.min.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.mobile-vsdoc.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.actionsheet.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.application.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.button.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.buttongroup.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.collapsible.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.drawer.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.listview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.loader.min.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.mobile.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.modalview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.navbar.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.pane.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.popover.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.scroller.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.scrollview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.shim.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.splitview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.switch.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.tabstrip.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.view.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.multiselect.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.notification.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.numerictextbox.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.ooxml.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pager.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.panelbar.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pdf.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pivot.configurator.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pivot.fieldmenu.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pivotgrid.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.popup.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.progressbar.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.reorderable.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.resizable.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.responsivepanel.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.router.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.agendaview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.dayview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.monthview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.recurrence.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.timelineview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.view.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.selectable.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.slider.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.sortable.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.splitter.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.spreadsheet.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.tabstrip.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.timepicker.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.timezones.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.toolbar.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.tooltip.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.touch.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.treelist.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.treeview.draganddrop.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.treeview.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.upload.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.userevents.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.validator.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.view.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.virtuallist.min.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.web-vsdoc.js" />
+    <None Include="Scripts\kendo\2016.3.1118\kendo.web.min.intellisense.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.web.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.webcomponents.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.window.min.js" />
+    <Content Include="Scripts\kendo\2016.3.1118\pako_deflate.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sitemap.xml" />
+    <Content Include="Scripts\Slider\rzslider.js" />
+    <Content Include="Scripts\Slider\rzslider.min.js" />
+    <Content Include="Scripts\Tree\angular-tree-control.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\RazorEmailTemplates\LeisureStatements\Assets\AJGLogo.png" />
+    <Content Include="Views\RazorEmailTemplates\LeisureStatements\Assets\holidayAndHomesLogo.png" />
+    <Content Include="Views\RazorEmailTemplates\TPS\TPSRazorTemplate.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Body\RazorEmailToHandlerTemplate.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Body\RazorEmailToManagerTemplate.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Body\RazorEmailToQualityAuditorTemplate.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Body\RazorEmailToRegionalManagerTemplate.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Body\RazorEmailToUser.cshtml" />
+    <Content Include="Scripts\kendo\2016.3.1118\jquery.min.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.all.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.angular.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.angular2.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.aspnetmvc.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.autocomplete.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.binder.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.button.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.calendar.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.color.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.colorpicker.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.columnmenu.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.columnsorter.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.combobox.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.core.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.odata.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.signalr.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.data.xml.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.barcode.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.chart.funnel.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.chart.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.chart.polar.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.core.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.diagram.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.gauge.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.map.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.mobile.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.qrcode.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.sparkline.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.stock.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.themes.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dataviz.treemap.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.datepicker.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.datetimepicker.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dialog.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dom.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.draganddrop.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.drawing.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.dropdownlist.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.editable.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.editor.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.excel.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.filebrowser.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.filtercell.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.filtermenu.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.fx.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.gantt.list.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.gantt.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.gantt.timeline.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.grid.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.groupable.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.imagebrowser.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.list.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.listview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.maskedtextbox.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mediaplayer.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.menu.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.actionsheet.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.application.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.button.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.buttongroup.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.collapsible.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.drawer.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.listview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.loader.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.modalview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.navbar.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.pane.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.popover.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.scroller.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.scrollview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.shim.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.splitview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.switch.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.tabstrip.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.mobile.view.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.multiselect.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.notification.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.numerictextbox.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.ooxml.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pager.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.panelbar.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pdf.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pivot.configurator.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pivot.fieldmenu.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.pivotgrid.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.popup.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.progressbar.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.reorderable.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.resizable.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.responsivepanel.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.router.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.agendaview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.dayview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.monthview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.recurrence.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.timelineview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.scheduler.view.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.selectable.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.slider.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.sortable.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.splitter.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.spreadsheet.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.tabstrip.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.timepicker.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.timezones.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.toolbar.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.tooltip.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.touch.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.treelist.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.treeview.draganddrop.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.treeview.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.upload.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.userevents.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.validator.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.view.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.virtuallist.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.web.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.webcomponents.min.js.map" />
+    <Content Include="Scripts\kendo\2016.3.1118\kendo.window.min.js.map" />
+    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\IndexNonVT.cshtml" />
+    <Content Include="Views\Shared\_EmailHistory.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Subject\GenericSubject.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Geoff\RazorEmailToUser.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\Geoff\GenericSubject.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\LeisureStatements\Subject\GenericSubject.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\LeisureStatements\Body\RazorEmailToUser.cshtml" />
+    <Content Include="Views\RazorEmailTemplates\LeisureStatements\Attachment\RazorAttachmentToUser.cshtml" />
+    <Content Include="Views\Admin\_MicroServiceView.cshtml" />
+    <Content Include="Views\Admin\_VTView.cshtml" />
+    <Content Include="Views\Admin\_Standard_NonVTView.cshtml" />
+    <Content Include="Scripts\version.json" />
+    <Content Include="Views\Admin\IndexAngularJS.cshtml" />
+    <Content Include="Views\Admin\Projects.cshtml" />
+    <Content Include="Views\Admin\SystemUsers.cshtml" />
+    <Content Include="Views\Admin\SystemLogs.cshtml" />
+    <Content Include="Views\MyHub\MyHub.cshtml" />
+    <Content Include="Views\TechTimeSheet\TechTimeSheet.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\MicroService\" />
+    <Folder Include="Views\RazorEmailTemplates\Attachment\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Project_Readme.html" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AJG.VirtualTrainer.Console\AJG.VirtualTrainer.Console.csproj">
+      <Project>{77099fbf-cfef-45af-99da-9263d37b9252}</Project>
+      <Name>AJG.VirtualTrainer.Console</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AJG.VirtualTrainer.Helper\AJG.VirtualTrainer.Helper.csproj">
+      <Project>{3fd75dba-cd41-4109-8aa1-90df3de89fa8}</Project>
+      <Name>AJG.VirtualTrainer.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VirtualTrainer\AJG.VirtualTrainer.csproj">
+      <Project>{967645f1-4854-49d3-bbef-2d80a4248e65}</Project>
+      <Name>AJG.VirtualTrainer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64446</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:64447/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties UseCdnSupport="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy /y "$(SolutionDir)\AJG.VirtualTrainer.Console\bin\$(ConfigurationName)\AJG.VirtualTrainer.Console.exe.config" "$(TargetDir)AJG.VirtualTrainer.Console.exe.config"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,396 @@
+﻿@model string
+<div id="tabstrip2" class="col-md-12 level2TabStrip">
+    <ul id="projectTabs" class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectOfficesGridId);" class="active">
+            <a href="#projectOfficesPanel" role="tab" data-toggle="tab">Offices</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectTeamsGridId);" class="">
+            <a href="#projectTeamsPanel" role="tab" data-toggle="tab">Teams</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectRegionsGridId);" class="">
+            <a href="#projectRegionsPanel" role="tab" data-toggle="tab">Regions</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectUsersGridId);" class="">
+            <a href="#projectUsersPanel" role="tab" data-toggle="tab">Users</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectRulesGridId);" class="">
+            <a href="#projectRulesPanel" role="tab" data-toggle="tab">Rules</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRolesGridId);" class="">
+            <a href="#projectEscalationsConfigPanel" role="tab" data-toggle="tab">Escalations</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectActurisImportsGridId);" class="">
+            <a href="#projectActurisImportsConfigPanel" role="tab" data-toggle="tab">Acturis Imports</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectDbDetailsGridId);" class="">
+            <a href="#projectDbDetailsPanel" role="tab" data-toggle="tab">Target Databases</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectSchedulesGridId);" class="">
+            <a href="#projectSchedulesPanel" role="tab" data-toggle="tab">Schedules</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectExclusionsGridId);" class="">
+            <a href="#projectExclusionsPanel" role="tab" data-toggle="tab">Exclusions</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectBreachesGridId);" class="">
+            <a href="#projectBreachesPanel" role="tab" data-toggle="tab">Breaches</a>
+        </li>
+    </ul>
+    <div id="ProjectDetailsLevel1" class="tab-content" style="margin-left:50px;">
+        <div role="tabpanel" class="tab-pane active container-fluid" id="projectOfficesPanel">
+            <div id="projectOfficesGrid" style="font-size:small"></div>
+            <br />
+            <div id="tabstrip4" class="col-md-12 level3TabStrip officeSubGridsContainer" style="display:none;">
+                <ul class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.OfficeTeamsGridId);" class="active">
+                        <a href="#OfficeTeamsPanel" role="tab" data-toggle="tab">Teams</a>
+                    </li>
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.OfficeUsersGridId);" class="">
+                        <a href="#OfficeUsersPanel" role="tab" data-toggle="tab">Users</a>
+                    </li>
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="OfficeTeamsPanel">
+                        <div id="OfficeTeamsGrid" style="font-size:small"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane container-fluid" id="OfficeUsersPanel">
+                        <div id="OfficeUsersGrid" style="font-size:small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectTeamsPanel">
+            <div id="projectTeamsGrid" style="font-size:small"></div>
+            <br />
+            <div id="tabstrip5" class="col-md-12 level3TabStrip teamSubGridsContainer" style="display:none;">
+                <ul class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.TeamUsersGridId);" class="active">
+                        <a href="#TeamUsersPanel" role="tab" data-toggle="tab">Users</a>
+                    </li>
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="TeamUsersPanel">
+                        <div id="TeamUsersGrid" style="font-size:small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectUsersPanel">
+            <div id="projectUsersGrid" style="font-size:small"></div>
+            <br />
+            <div id="projectusergridmembershiptabstrip" class="col-md-12">
+                <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.userofficemembershipsGridId);" class="active">
+                        <a href="#userofficememberships" role="tab" data-toggle="tab">Office Memberships</a>
+                    </li>
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.userteammembershipsGridId);" class="">
+                        <a href="#userteammemberships" role="tab" data-toggle="tab">Team Memberships</a>
+                    </li>
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="userofficememberships">
+                        <div id="userofficemembershipsGrid" style="font-size:small"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane container-fluid" id="userteammemberships">
+                        <div id="userteammembershipsGrid" style="font-size:small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectRegionsPanel">
+            <div id="projectRegionsGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectRulesPanel">
+            <div id="projectRulesGrid" style="font-size:small"></div>
+            <br />
+            <div id="tabstrip6" class="col-md-12">
+                <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="" class="active">
+                        <a href="#ruleConfigurations" role="tab" data-toggle="tab">Rule Configurations</a>
+                    </li>
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="ruleConfigurations">
+                        <div id="ruleConfigurationsGrid" style="font-size:small"></div>
+                        <br />
+                        <div id="tabstrip7" class="col-md-12">
+                            <ul class="nav nav-tabs level4TabStrip" role="tablist" style="margin-left:50px;">
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleConfigProjectParticipantsGridId);" class="active">
+                                    <a href="#ruleConfigProjectParticipantsPanel" role="tab" data-toggle="tab">Project Participants</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleConfigOfficeParticipantsGridId);" class="">
+                                    <a href="#ruleConfigOfficeParticipantsPanel" role="tab" data-toggle="tab">Office Participants</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleConfigTeamParticipantsGridId);" class="">
+                                    <a href="#ruleConfigTeamParticipantsPanel" role="tab" data-toggle="tab">Team Participants</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleConfigUserParticipantsGridId);" class="">
+                                    <a href="#ruleConfigUserParticipantsPanel" role="tab" data-toggle="tab">User Participants</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlExclusionsInputGridIdId);" class="">
+                                    <a href="#ruleConfigSqlInputPanel" role="tab" data-toggle="tab">Stored Proc Input Values</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content level4TabStrip" style="margin-left:50px;">
+                                <div role="tabpanel" class="tab-pane active container-fluid" id="ruleConfigProjectParticipantsPanel">
+                                    <div id="ruleConfigProjectParticipantsGrid" style="font-size:small"></div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane container-fluid" id="ruleConfigOfficeParticipantsPanel">
+                                    <div id="ruleConfigOfficeParticipantsGrid" style="font-size:small"></div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane container-fluid" id="ruleConfigTeamParticipantsPanel">
+                                    <div id="ruleConfigTeamParticipantsGrid" style="font-size:small"></div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane container-fluid" id="ruleConfigUserParticipantsPanel">
+                                    <div id="ruleConfigUserParticipantsGrid" style="font-size:small"></div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane container-fluid" id="ruleConfigSqlInputPanel">
+                                    <div id="tabstrip13" class="col-md-12">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            @*<li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlClassRefernceInputGridId);" class="active">
+                                                    <a href="#ruleSqlClassRefernceInputPanel" role="tab" data-toggle="tab">Class Reference</a>
+                                                </li>*@
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlExclusionsInputGridId);" class="active">
+                                                <a href="#ruleSqlExclusionsInputPanel" role="tab" data-toggle="tab">Exclusions Group</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlHardCodedInputGridId);" class="">
+                                                <a href="#ruleSqlHardCodedInputPanel" role="tab" data-toggle="tab">Hard Coded</a>
+                                            </li>
+                                        </ul>
+                                        <div id="SystemUsersRoles" class="tab-content">
+                                            @*<div role="tabpanel" class="tab-pane active container-fluid" id="ruleSqlClassRefernceInputPanel">
+                                                    <div id="ruleSqlClassRefernceInputGrid" style="font-size:small"></div>
+                                                </div>*@
+                                            <div role="tabpanel" class="tab-pane active container-fluid" id="ruleSqlExclusionsInputPanel">
+                                                <div id="ruleSqlExclusionsInputGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="ruleSqlHardCodedInputPanel">
+                                                <div id="ruleSqlHardCodedInputGrid" style="font-size:small"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationsConfigPanel">
+            <br />
+            <div id="tabstrip8" class="col-md-12" style="">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRolesGridId);" class="active">
+                        <a href="#projectEscalationConfigRolePanel" role="tab" data-toggle="tab">Role</a>
+                    </li>
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersGridId);" class="">
+                        <a href="#projectEscalationConfigUserPanel" role="tab" data-toggle="tab">User</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigRolePanel">
+                        <div id="projectEscalationConfigRolesGrid" style="font-size:small"></div>
+                        <br />
+                        <div id="tabstrip10" class="col-md-12" style="">
+                            <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceRuleGridId);" class="active">
+                                    <a href="#projectEscalationConfigRoleBreachSourcePanel" role="tab" data-toggle="tab">Breach Sources</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleEscalationsHistoryPanelContentId);" class="">
+                                    <a href="#projectEscalationConfigRoleEscalationsHistoryPanel" role="tab" data-toggle="tab">Escalations History</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content level3TabStrip">
+                                <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigRoleBreachSourcePanel">
+                                    <div id="tabstrip11" class="col-md-12">
+                                        <ul class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceProjectGridId);" class="active">
+                                                <a href="#projectEscalationConfigRoleBreachSourceProjectPanel" role="tab" data-toggle="tab">Projects</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceRuleGridId);" class="">
+                                                <a href="#projectEscalationConfigRoleBreachSourceRulePanel" role="tab" data-toggle="tab">Rules</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceRuleConfigGridId);" class="">
+                                                <a href="#projectEscalationConfigRoleBreachSourceRuleConfigPanel" role="tab" data-toggle="tab">Rule Configurations</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceOfficeGridId);" class="">
+                                                <a href="#projectEscalationConfigRoleBreachSourceOfficePanel" role="tab" data-toggle="tab">Offices</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceTeamGridId);" class="">
+                                                <a href="#projectEscalationConfigRoleBreachSourceTeamPanel" role="tab" data-toggle="tab">Teams</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRoleBreachSourceUserGridId);" class="">
+                                                <a href="#projectEscalationConfigRoleBreachSourceUserPanel" role="tab" data-toggle="tab">Users</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" style="margin-left:50px;">
+                                            <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigRoleBreachSourceProjectPanel">
+                                                <div id="projectEscalationConfigRoleBreachSourceProjectGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigRoleBreachSourceRulePanel">
+                                                <div id="projectEscalationConfigRoleBreachSourceRuleGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigRoleBreachSourceRuleConfigPanel">
+                                                <div id="projectEscalationConfigRoleBreachSourceRuleConfigGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigRoleBreachSourceOfficePanel">
+                                                <div id="projectEscalationConfigRoleBreachSourceOfficeGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigRoleBreachSourceTeamPanel">
+                                                <div id="projectEscalationConfigRoleBreachSourceTeamGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigRoleBreachSourceUserPanel">
+                                                <div id="projectEscalationConfigRoleBreachSourceUserGrid" style="font-size:small"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigRoleEscalationsHistoryPanel">
+                                    <div class="" style="margin-left:50px;display:none;" id="projectEscalationConfigRoleEscalationsHistoryPanelContent">
+                                        @*<div class="col-md-6">
+                                                <div id="projectEscalationConfigRoleEscalationsHistoryGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div class="col-md-6" style="background-color:lightgray;">
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <label>From:</label>
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                         <div id="projectEscalationConfigRoleEscalationsHistoryEmailFrom" style="font-size:small"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <label>To:</label>
+                                                    </div>
+                                                    <div class="col-md-11">
+                                                        <div id="projectEscalationConfigRoleEscalationsHistoryEmailTo" style="font-size:small"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        <label>Subject:</label>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div id="projectEscalationConfigRoleEscalationsHistoryEmailSubject" style="font-size:small"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" style="background-color:white; margin:5px;">
+                                                    <div class="col-md-12">
+                                                        <br />
+                                                        <div id="projectEscalationConfigRoleEscalationsHistoryEmailBody" style="font-size:small; height:285px; overflow:auto;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserPanel">
+                        <div id="projectEscalationConfigUsersGrid" style="font-size:small"></div>
+                        <div id="tabstrip9" class="col-md-12" style="">
+                            <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersRecipientsGridId);" class="active">
+                                    <a href="#projectEscalationConfigUserRecipientPanel" role="tab" data-toggle="tab">Recipients</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceRuleGridId);" class="">
+                                    <a href="#projectEscalationConfigUserBreachSourcePanel" role="tab" data-toggle="tab">Breach Sources</a>
+                                </li>
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRuleEscalationsHistoryGridId);" class="">
+                                    <a href="#projectEscalationConfigUserEscalationsHistoryPanel" role="tab" data-toggle="tab">Escalations History</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                                <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigUserRecipientPanel">
+                                    <div id="projectEscalationConfigUsersRecipientsGrid" style="font-size:small"></div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserBreachSourcePanel">
+                                    <br />
+                                    <div id="tabstrip10" class="col-md-12">
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceProjectGridId);" class="active">
+                                                <a href="#projectEscalationConfigUserBreachSourceProjectPanel" role="tab" data-toggle="tab">Projects</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceRuleGridId);" class="">
+                                                <a href="#projectEscalationConfigUserBreachSourceRulePanel" role="tab" data-toggle="tab">Rules</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceRuleConfigGridId);" class="">
+                                                <a href="#projectEscalationConfigUserBreachSourceRuleConfigPanel" role="tab" data-toggle="tab">Rule Configurations</a>
+                                            </li>
+
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceOfficeGridId);" class="">
+                                                <a href="#projectEscalationConfigUserBreachSourceOfficePanel" role="tab" data-toggle="tab">Offices</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceTeamGridId);" class="">
+                                                <a href="#projectEscalationConfigUserBreachSourceTeamPanel" role="tab" data-toggle="tab">Teams</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigUsersBreachSourceUserGridId);" class="">
+                                                <a href="#projectEscalationConfigUserBreachSourceUserPanel" role="tab" data-toggle="tab">Users</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigUserBreachSourceProjectPanel">
+                                                <div id="projectEscalationConfigUsersBreachSourceProjectGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserBreachSourceRulePanel">
+                                                <div id="projectEscalationConfigUsersBreachSourceRuleGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserBreachSourceRuleConfigPanel">
+                                                <div id="projectEscalationConfigUsersBreachSourceRuleConfigGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserBreachSourceOfficePanel">
+                                                <div id="projectEscalationConfigUsersBreachSourceOfficeGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserBreachSourceTeamPanel">
+                                                <div id="projectEscalationConfigUsersBreachSourceTeamGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserBreachSourceUserPanel">
+                                                <div id="projectEscalationConfigUsersBreachSourceUserGrid" style="font-size:small"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigUserEscalationsHistoryPanel">
+                                    <div style="" id="projectEscalationConfigUserEscalationsHistoryPanelContent">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectActurisImportsConfigPanel">
+            <div id="projectActurisImportsGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectDbDetailsPanel">
+            <div id="projectDbDetailsGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectSchedulesPanel">
+            <div id="projectSchedulesGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectExclusionsPanel">
+            <div id="projectExclusionsGrid" style="font-size:small"></div>
+            <br />
+            <div id="tabstrip12" class="col-md-12">
+                <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="" class="active">
+                        <a href="#projectExclusionItemsPanel" role="tab" data-toggle="tab">Exclusions Items</a>
+                    </li>
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="projectExclusionItemsPanel">
+                        <div id="projectExclusionItemsGrid" style="font-size:small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectBreachesPanel">
+            <div id="projectBreachesGrid" style="font-size:small"></div>
+        </div>
+    </div>
+</div>
+

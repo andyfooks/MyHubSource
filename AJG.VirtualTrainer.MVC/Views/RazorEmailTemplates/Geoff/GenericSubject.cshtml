@@ -1,0 +1,11 @@
+﻿@model VirtualTrainer.EscalationsFrameworkConfigEmailRazorModel
+
+@if (Model.BreachLogs.Count == 1)
+{
+    DateTime dt = DateTime.Now;
+    @dt.ToString("hh:mm")
+}
+else
+{
+    <p>Not One</p>
+}

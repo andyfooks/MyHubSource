@@ -1,0 +1,30 @@
+﻿@model string
+<div id="tabstrip2" class="col-md-12 level2TabStrip">
+    <ul id="projectTabs" class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectUsersGridId);" class="active">
+            <a href="#projectUsersPanel" role="tab" data-toggle="tab">Users</a>
+        </li>
+        <li role="presentation" onclick="" class="">
+            <a href="#projectRulesPanel" role="tab" data-toggle="tab">Available Web Methods</a>
+            @*Want to add properties as sub grid - could use angular js as just a view!!! *@
+        </li>
+        <li role="presentation" onclick="" class="">
+            <a href="#projectEscalationsConfigPanel" role="tab" data-toggle="tab">Web Methods Access History</a>
+            @*Want to add error message as sub grid - could use angular js as just a view!!! *@
+        </li>
+    </ul>
+    <div id="ProjectDetailsLevel1" class="tab-content" style="margin-left:50px;">
+        <div role="tabpanel" class="tab-pane active container-fluid" id="projectUsersPanel">
+            <div id="projectUsersGrid" style="font-size:small"><div class="k-grouping-header" data-role="droptarget" style="touch-action: none;">Drag a column header and drop it here to group by that column</div><div class="k-grid-header" style="padding-right: 14px;"><div class="k-grid-header-wrap k-auto-scrollable"><table role="grid"><colgroup><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:80px"><col style="width:170px"></colgroup><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader" data-field="Name" aria-haspopup="true" rowspan="1" data-title="Name" data-index="0" id="4995cd47-6600-454a-a916-c3e0dbbb168e" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Name</a></th><th scope="col" role="columnheader" data-field="DomainName" aria-haspopup="true" rowspan="1" data-title="Domain Name" data-index="1" id="828f08f4-54d5-4cbc-b9bd-f5b63eecdcff" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Domain Name</a></th><th scope="col" role="columnheader" data-field="Email" aria-haspopup="true" rowspan="1" data-title="Email" data-index="2" id="93f9d40c-dd15-4fc0-852e-f51ddd6e2231" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Email</a></th><th scope="col" role="columnheader" data-field="IsProjectAdmin" aria-haspopup="true" rowspan="1" data-title="Is Project Admin" data-index="3" id="1aff9085-6edf-485b-957f-feded9a67667" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Is Project Admin</a></th><th scope="col" role="columnheader" data-field="IsActive" aria-haspopup="true" rowspan="1" data-title="Is Active" data-index="4" id="e9215af1-0c70-44cb-a524-9407ba7c549f" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Is Active</a></th><th scope="col" id="5c36f7d8-897a-4acf-8529-c92ae5c7b8b0" rowspan="1" data-index="5" class="k-header">&nbsp;</th></tr></thead></table></div></div><div class="k-grid-content k-auto-scrollable" style="height: 299px;"><table role="grid" style="height: auto; touch-action: none;" data-role="selectable" class="k-selectable"><colgroup><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:80px"><col style="width:170px"></colgroup><tbody role="rowgroup"><tr data-uid="89b8ba3a-34b5-49c4-a31c-2ff63bfb1f79" role="row" class="k-state-selected" aria-selected="true"><td role="gridcell">Andy Fooks</td><td role="gridcell">ANDYSURFACE\andy</td><td role="gridcell">andyfooks@live.com</td><td role="gridcell">true</td><td role="gridcell">true</td><td role="gridcell"><a class="k-button k-button-icontext k-grid-edit" href="#"><span class="k-icon k-i-edit"></span>Edit</a><a class="k-button k-button-icontext k-grid-delete" href="#"><span class="k-icon k-i-delete"></span>Remove</a></td></tr></tbody></table></div><div class="k-pager-wrap k-grid-pager k-widget k-floatwrap" data-role="pager"><a href="#" aria-label="Go to the first page" title="Go to the first page" class="k-link k-pager-nav k-pager-first k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-seek-w"></span></a><a href="#" aria-label="Go to the previous page" title="Go to the previous page" class="k-link k-pager-nav  k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-arrow-w"></span></a><ul class="k-pager-numbers k-reset"><li class="k-current-page"><span class="k-link k-pager-nav">1</span></li><li><span class="k-state-selected">1</span></li></ul><a href="#" aria-label="Go to the next page" title="Go to the next page" class="k-link k-pager-nav  k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-arrow-e"></span></a><a href="#" aria-label="Go to the last page" title="Go to the last page" class="k-link k-pager-nav k-pager-last k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-seek-e"></span></a><span class="k-pager-info k-label">1 - 1 of 1 items</span></div></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectRulesPanel">
+            <br />
+            <p>NOT IMPLEMENTED</p>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationsConfigPanel">
+            <br />
+            <p>NOT IMPLEMENTED</p>
+        </div>
+    </div>
+</div>
+

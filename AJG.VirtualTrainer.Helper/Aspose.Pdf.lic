@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<License>
+  <Data>
+    <LicensedTo>AJG</LicensedTo>
+    <EmailTo>andy_fooks@ajg.com</EmailTo>
+    <LicenseType>Developer OEM</LicenseType>
+    <LicenseNote>Limited to 2 developers, unlimited physical locations</LicenseNote>
+    <OrderID>150430111349</OrderID>
+    <UserID>292435</UserID>
+    <OEM>This is a redistributable license</OEM>
+    <Products>
+      <Product>Aspose.Pdf for .NET</Product>
+    </Products>
+    <EditionType>Enterprise</EditionType>
+    <SerialNumber>228c9e3e-c5bc-47f5-be7e-c2889d0429f5</SerialNumber>
+    <SubscriptionExpiry>20160430</SubscriptionExpiry>
+    <LicenseVersion>3.0</LicenseVersion>
+    <LicenseInstructions>http://www.aspose.com/corporate/purchase/license-instructions.aspx</LicenseInstructions>
+  </Data>
+  <Signature>y/FbyU6PO7D63iZRiPLMTv06hcWN0JO/pz6GXPWUHNee8I0vQSYA0vsA9jFtR/Q/hTFsH++gJWGbMGN1bjETfCoXxb2P4Gvwhzz7OkPaq2p+iPyxFJ3BwiADuVX9uwBBtOlLKrHZ1hSnksXDLbPQp5Vu7aPcn5/9/lkbArnwZiQ=</Signature>
+</License>

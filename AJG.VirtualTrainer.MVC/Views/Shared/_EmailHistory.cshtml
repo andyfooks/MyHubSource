@@ -1,0 +1,130 @@
+﻿@model AJG.VirtualTrainer.MVC.Controllers.AdminController.EscalationsEmailHistoryDTO
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="EscalationsHistoryGrid" style="font-size:small"></div>
+    </div>
+    <div class="col-md-6" style="background-color:lightgray;">
+        <br />
+        <div class="row">
+            <div class="col-md-1">
+                <label>From:</label>
+            </div>
+            <div class="col-md-11">
+                <div class="EscalationsHistoryEmailFrom" style="font-size:small"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <label>To:</label>
+            </div>
+            <div class="col-md-11">
+                <div class="EscalationsHistoryEmailTo" style="font-size:small"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">
+                <label>Subject:</label>
+            </div>
+            <div class="col-md-12">
+                <div class="EscalationsHistoryEmailSubject" style="font-size:small"></div>
+            </div>
+        </div>
+        <div class="row" style="background-color:white; margin:5px;">
+            <div class="col-md-12">
+                <br />
+                <div class="EscalationsHistoryEmailBody" style="font-size:small; height:285px; overflow:auto;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var a = @Html.Raw(Json.Encode(Model));
+
+    if ($(a.ParentDivID + ' .EscalationsHistoryGrid').kendoGrid()) {
+        $(a.ParentDivID + ' .EscalationsHistoryGrid').kendoGrid('destroy').empty();
+    }
+
+    $(a.ParentDivID + ' .EscalationsHistoryEmailFrom').html('');
+    $(a.ParentDivID + ' .EscalationsHistoryEmailTo').html('');
+    $(a.ParentDivID + ' .EscalationsHistoryEmailSubject').html('');
+    $(a.ParentDivID + ' .EscalationsHistoryEmailBody').html('');
+    var dataSource = new kendo.data.DataSource({
+        type: "aspnetmvc-ajax",
+        transport: {
+            read: {
+                url: a.AdminRoot + "/" + 'ListEscalationsEmailHistory?escalationsConfigId=' + a.EscalationsConfigId,
+                dataType: "json",
+                cache: false
+            },
+            parameterMap: function (options, operation) {
+                if (operation !== "read" && options.models) {
+                    return { models: kendo.stringify(options.models) };
+                }
+            }
+        },
+        serverSorting: true,
+        serverFiltering: true,
+        serverGrouping: true,
+        serverPaging: true,
+        batch: false,
+        pageSize: 250,
+        schema: {
+            data: "data",
+            total: "total",
+            model: {
+                id: "Id",
+                fields: {
+                    Id: { editable: false, nullable: true },
+                    UserName: { validation: { required: true } },
+                    EmailFrom: { validation: { required: true } },
+                    EmailTo: { validation: { required: true } },
+                    EmailSubject: { validation: { required: true } },
+                    TimeStamp: { type: "date", editable: false, validation: { required: false } },
+                    TimeStampDateOnly: { type: "date", editable: false, validation: { required: false } },
+                }
+            }
+        }
+    });
+
+    $(a.ParentDivID + ' .EscalationsHistoryGrid').kendoGrid({
+        dataSource: dataSource,
+        selectable: true,
+        resizable: true,
+        filterable: true,
+        pageable: true,
+        height: 400,
+        groupable: true,
+        sortable: true,
+        columns: [
+            { field: "UserName", title: "User Name", width: "80px" },
+            { field: "EmailFrom", title: "Email From", width: "80px" },
+            { field: "EmailTo", title: "Email To", width: "80px" },
+            { field: "TimeStampDateOnly", title: "Sent Date", width: "45px", format: "{0:dd-MMM-yyyy}" },
+            { field: "TimeStamp", title: "Sent Time", width: "45px", format: "{0:hh:mm}" },
+        ],
+        change: function (e) {
+            var selectedRows = this.select();
+            if (selectedRows.length > 0) {
+                var selectedRowId = this.dataItem(selectedRows[0]).Id;
+                var itemSubject = this.dataItem(selectedRows[0]).EmailSubject
+                var itemFrom = this.dataItem(selectedRows[0]).EmailFrom
+                var itemTo = this.dataItem(selectedRows[0]).EmailTo
+
+                $.ajax({
+                    type: 'GET',
+                    url: a.AdminRoot + "/GetEscalationsEmailBody?ItemId=" + selectedRowId,
+                    success: function (result) {
+                        $(a.ParentDivID + ' .EscalationsHistoryEmailBody').html(result);
+                    }
+                });
+
+                $(a.ParentDivID + ' .EscalationsHistoryEmailSubject').html(itemSubject);
+                $(a.ParentDivID + ' .EscalationsHistoryEmailFrom').html(itemFrom);
+                $(a.ParentDivID + ' .EscalationsHistoryEmailTo').html(itemTo);
+            }
+        }
+    });
+</script>
+

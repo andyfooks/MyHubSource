@@ -1,0 +1,105 @@
+
+       declare @orgKey nvarchar(max), @orgName nvarchar(max)
+       
+       SET @orgKey = (SELECT top 1 o.organisation_key 
+                  FROM [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[organisation] o
+                 WHERE o.organisation_key != -1)
+
+       SET @orgName = (SELECT top 1 o.organisation_name 
+                  FROM [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[organisation] o
+                 WHERE o.organisation_key != -1)
+
+       CREATE TABLE #Temp (         PolicyRef nvarchar(10),
+                                                PolicyBandRef nvarchar(10),
+                                                VersionRef nvarchar(10),
+                              AccountHandlerKey nvarchar(max),
+                              BreachDisplayHTML nvarchar(max),
+                              ActurisOrganisationKey int, 
+                              ActurisOrganisationName varchar(max),
+                              OfficeKey int,
+                              OfficeName varchar(max),
+                              TeamKey int,
+                              TeamName varchar(max),
+                              RuleBreachFieldOne int, --client_key int
+                              RuleBreachFieldTwo money, --outstanding money
+                              --RuleBreachFieldThree varchar(max), --broker_office_key int
+                              RuleBreachFieldThree nvarchar(max), --product_target_name nvarchar(max)
+                              RuleBreachFieldFour datetime, --renewal_date datetime
+                              RuleBreachFieldFive nvarchar(max), --description nvarchar(max)
+                              RuleBreachFieldSix nvarchar(100), --policy_no nvarchar(100)
+                              RuleBreachFieldSeven datetime --accepted_date datetime
+                       )
+
+      insert into #Temp select distinct p.policy_ref,
+                                                            p.policy_band_ref,
+                                                            p.version_ref,
+                                         p.policy_account_handler_key,
+                                          '<div>This policy: ' + CAST(p.policy_ref as nvarchar(max)) + ': ' + p.display_name  + ', must have a policy number<\div>',
+                                          @orgKey,
+                                          @orgName,
+                                         p.policy_exec_office_key,
+                                         o.task_exec_office_name,
+                                         p.policy_income_team_key,
+                                          team.team_name,
+                                          tr.client_key,
+                                         tr.total_insurer_outstanding,
+                                          --p.policy_broker_office_key,
+                                          --p.policy_broker_key,
+                                         t.product_target_name,
+                                         p.renewal_date_key,
+                                          s.description,
+                                         p.insurer_policy_no,
+                                         p.accepted_date_key
+                                          from [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].policy p
+                                          inner join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[policy_status] s on (p.policy_status_key = s.policy_status_key)
+                                          inner join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[product_target] t on (p.product_target_key = t.product_target_key)
+                                          leinner ft join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[transaction] tr on (p.policy_key = tr.policy_key)
+                                          --inner join VirtualTrainer.dbo.vt_live_conf_active_rules r on p.policy_broker_office_key = r.office_key
+                                          inner join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[policy_type] pt on (t.policy_type_key = pt.policy_type_key)
+                                          inner join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[category] c on (c.category_key = pt.category_key)
+                                          inner join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[task_exec_office] as o on (p.[policy_exec_office_key] = o.[task_exec_office_key])
+                                          inner join [EMEUKHC4DB10CP].[acturis_dw_ajg].[dbo].[task_team] as team on (p.[policy_income_team_key] = team.task_team_key)
+                                          --where p.policy_account_handler_key = @handlerKey
+                                          --where tr.total_insurer_outstanding <> 0
+                                          where (p.insurer_policy_no is NULL
+                                    or p.insurer_policy_no like '%TBA%'
+                                    or p.insurer_policy_no like 'TBC%'
+                                    or p.insurer_policy_no like 'Not yet%'
+                                    or p.insurer_policy_no like '%Unknown%'
+                                    or p.insurer_policy_no like '%unknown%'
+                                    or p.insurer_policy_no like '%N/A%'
+                                    or p.insurer_policy_no = 'New'
+                                    or p.insurer_policy_no like '%MYA%'
+                                    or p.insurer_policy_no like '%T. B. A.%'
+                                    or p.insurer_policy_no = 't b a'
+                                    or p.insurer_policy_no = 'n y i'
+                                    or p.insurer_policy_no = 'to be confirmed'
+                                    or p.insurer_policy_no like '_'
+                                    or p.insurer_policy_no = '')
+                                      and (s.description = 'Accepted' or s.description = 'Live')
+                                      and p.cancellation_reason_key != -1
+                                      --and ((p.accepted_date_key > DATEADD(dd,-60,GETDATE()) 
+                                      --              and p.accepted_date_key <= DATEADD(dd,-30,GETDATE()))
+                                      --              or (p.accepted_date_key <= DATEADD(dd,-60,GETDATE()) 
+                                      --              --and p.policy_ref in (select context_ref from VirtualTrainer.dbo.vt_live_breach_log where rule_code = 'PNO')
+                                      --              )
+                                      --       )
+                                      and t.product_target_name not like '%Add%'            -- No Add-Ons
+                                      and c.category_name != 'Add On'
+                                     and p.business_event_key <> 9 --no fees
+       select * from #Temp 
+       where OfficeName in ('Glasgow', 'Glasgow OV')
+       order by PolicyRef
+drop table #Temp
+
+Andy Fooks
+SharePoint Developer
+Gallagher Technology Services
+Arthur J. Gallagher International
+Tel: + 44 (0)12 0237 1721 (Direct) 
+
+100 Holdenhurst Rd
+Bournemouth 
+BH8 8AL
+www.ajginternational.com
+

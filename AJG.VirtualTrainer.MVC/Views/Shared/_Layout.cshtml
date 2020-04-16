@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MyHub</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+	<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+	@Scripts.Render("~/bundles/jquery")
+	<link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2016.3.1118/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+	<script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2016.3.1118/jszip.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.aspnetmvc.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="@Url.Content("~/Scripts/application.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/date.js")"></script>*@
+    <!-- Only track using google-analytics in Prod -->
+    @if (ViewBag.Environment == "Prod")
+    {
+        <script async="" src="//www.google-analytics.com/analytics.js"></script>
+        <script>    
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+                ga('create', 'UA-8387077-33', 'auto');
+                ga('send', 'pageview');
+        </script>
+    }
+</head>
+<body ng-app="MyHubApp">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="">
+            @*class="container"*@
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(@System.Configuration.ConfigurationManager.AppSettings["ProjectName"], @System.Configuration.ConfigurationManager.AppSettings["TargetHomePage"], @System.Configuration.ConfigurationManager.AppSettings["TargetHomePage"], new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (ViewBag.User != null
+                         && @System.Configuration.ConfigurationManager.AppSettings["TechTimeSheetEnabled"] != null 
+                         && @System.Configuration.ConfigurationManager.AppSettings["TechTimeSheetEnabled"].ToLower() == "true"
+                         && ViewBag.ShowTechTimeSheet == true)
+                    {
+                        <li>@Html.ActionLink("Time Sheet", "TechTimeSheet", "TechTimeSheet")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav">
+                    @if (ViewBag.User != null && (ViewBag.User.IsSystemAdmin || ViewBag.User.IsProjectAdmin))
+                    {
+                        <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
+                    }
+                </ul>
+                <ul class="nav navbar-right" style="font-weight:bolder">
+                    @if (ViewBag.ADUser != null)
+                    {
+                        <li class="navbar-text">Hello: @ViewBag.ADUser.UserDetails.FullName</li>
+                        <li class="navbar-text">@ViewBag.ADUser.UserDetails.Title</li>
+                        <li class="navbar-text">@ViewBag.ADUser.UserDetails.Department</li>
+                        if (ViewBag.ADUser.ManagerDetails != null)
+                        {
+                            <li class="navbar-text">Manager: @ViewBag.ADUser.ManagerDetails.FullName</li>
+                        }
+                    }
+                    @if (ViewBag.Environment != "Prod")
+                    {
+                        <li class="nav navbar-text navbar-right" style="font-weight:bolder">(@ViewBag.Environment)</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="body-content">@*class="container"*@
+        @RenderBody()
+        <hr />
+        @*<footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)    
+</body>
+</html>

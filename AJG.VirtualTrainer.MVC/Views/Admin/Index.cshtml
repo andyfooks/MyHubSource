@@ -1,0 +1,313 @@
+﻿@{
+    ViewBag.Title = "Administration";
+}
+<h2>@ViewBag.Title</h2>
+
+<div id="projects">
+    <div id="tabstrip1" class="col-md-12 level1TabStrip">
+        <ul id="systemTabs" class="nav nav-tabs" role="tablist">
+            <li role="presentation" onclick="app.admin.loadProjectsGrid();" class="active">
+                <a href="#projectsPanel" role="tab" data-toggle="tab">Projects</a>
+            </li>
+            @if (ViewBag.User.IsSystemAdmin == true)
+            {
+                <li role="presentation" onclick="app.admin.LoadAllSystemUsersGrid();" class="">
+                    <a href="#allSystemUsersPanel" role="tab" data-toggle="tab">Users</a>
+                </li>
+                <li role="presentation" onclick="app.admin.LoadAllSystemLogsGrid();" class="">
+                    <a href="#allSystemLogsPanel" role="tab" data-toggle="tab">System Logs</a>
+                </li>
+            }
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active container-fluid" id="projectsPanel">
+                <div id="projectsGrid" style=""></div>
+                <br />
+                <div id="projectsAdminContent"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane container-fluid" id="allSystemUsersPanel">
+                <div id="systemUsersGrid" style=""></div>
+                <br />
+                <div id="systemuserspermissionstabstrip" class="col-md-12">
+                    <ul class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+                        <li role="presentation" onclick="" class="active">
+                            <a href="#systemUserSystemPermissionsPanel" role="tab" data-toggle="tab">Project Membership</a>
+                        </li>
+                    </ul>
+                    <div id="SystemUsersRoles" class="tab-content" style="margin-left:50px;">
+                        <div role="tabpanel" class="tab-pane active container-fluid" id="systemUserSystemPermissionsPanel">
+                            <div id="systemUserSystemPermissionsGrid" style="font-size:small"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane container-fluid" id="allSystemLogsPanel">
+                <div id="systemLogsGrid" style=""></div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <label>Error Message</label>
+                        <br />
+                        <div style="height:400px; overflow: auto; overflow-x: hidden;" id="systemLogErrorMessage"></div>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <label>Stack Trace</label>
+                        <br />
+                        <div style="height:400px; overflow: auto; overflow-x: hidden;" id="systemLogStackTrace"> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-kendo-template" id="ruleSnapshottemplate">
+    <div id="details-container">
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <p>Clicking <b>'Run Query'</b> below will execute the <b>#= Name #</b> rule and the stored procedures for the rule configuration(s).</p>
+                <p>This is a snapshot of the LOB DB(s) and the breaches will not be recorded in the VT's breach database.</p>
+                <p>The process can take a while, but you can minimise this window while doing other things on this page.</p>
+                <p>The header will turn <label style="color:green"><b>Green</b></label> once the results have arrived.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div id="ruleSnapShotBreachesGrid" class="col-md-11"></div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <button id="rulesnapshotrunQueryButton" type="button" class="btn btn-primary center-block" onclick="app.admin.LoadRuleLOBSnapShotGrid('#= Id #')">Run Query</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="executeProjectTemplate">
+    <div id="details-container">
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <p>Clicking <b>'Execute'</b> below will execute rules and escalations for the project <b>#= ProjectName #</b></p>
+                <p>This is not a drill or practice. Clicking the Execute button below will result in the configured actions of this project being executed.</p>
+                <p>The process can take a while, but you can minimise this window while doing other things on this page.</p>
+                <p>The header will turn <label style="color:green"><b>Green</b></label> once the process has completed.</p>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <button id="projectExecuteButton" type="button" class="btn btn-primary center-block" onclick="app.admin.ExecuteProjectRulesEtc('#= ProjectUniqueKey #')">Execute</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="acturisImportSnapShotTemplate">
+    <div id="details-container">
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <p>Clicking <b>'Test Query'</b> below will execute the <b>#= Name #</b> Import script.</p>
+                <p>This is a snapshot of the LOB DB(s) business structure and nothing will actually be recorded in the Virtual Trainer's databases.</p>
+                <p>The process can take a while, but you can minimise this window while doing other things on this page.</p>
+                <p>The header will turn <label style="color:green"><b>Green</b></label> once the results have arrived.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div id="acturisImportSnapShotGrid" class="col-md-11"></div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <button id="acturisImportSnapShotQueryButton" type="button" class="btn btn-primary center-block" onclick="app.admin.LoadActurisImportSnapShottGrid('#= Id #')">Test Query</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="escalationRoleConfigExecutionTemplate">
+    <div id="details-container">
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <p>Clicking <b>'Test Escalation'</b> below, will execute the <b>#= Name #</b> Escalation configuration resulting in emails being sent to the 'Override Recipient Email' address.</p>
+                <p>The 'Override Recipient Email' value for the configuration must be populated for this feature to work.</p>
+                <p>The process can take a while, but you can minimise this window while doing other things on this page.</p>
+                <p>The header will turn <label style="color:green"><b>Green</b></label> once completed.</p>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <h3><b><label id="escalationRoleConfigExecutionTemplateResultsMessage"></label></b></h3>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <button id="rulesnapshotrunQueryButton" type="button" class="btn btn-primary center-block" onclick="app.admin.ExecuteEscalationsRuleConfigTest('#= Id #')">Test Escalation</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="exchangeAccountTestTemplate">
+    <div id="details-container">
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <p>Clicking <b>'Test Exchange Account Configuration'</b> below, will execute the <b>#= DisplayName #</b> Exchange Account configuration resulting in the acount being accessed by the system and the first email in the inbox being displayed below.</p>
+                <p>The process shouldn't take long, but you can minimise this window while doing other things on this page.</p>
+                <p>The header will turn <label style="color:green"><b>Green</b></label> once completed.</p>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <h3><b><label id="exchangeAccountTestTemplateResultsMessage"></label></b></h3>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <button id="exchangeAccountTestQueryButton" type="button" class="btn btn-primary center-block" onclick="app.admin.ExecuteExchangeAccountConfigTest('#= Id #')">Test Exchange Account Configuration</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="escalationUserConfigExecutionTemplate">
+    <div id="details-container">
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <p>Clicking <b>'Run Escalation'</b> below, will execute the <b>#= Name #</b> Escalation configuration resulting in emails being sent to the configured recipients.</p>
+                <p>The process can take a while, but you can minimise this window while doing other things on this page.</p>
+                <p>The header will turn <label style="color:green"><b>Green</b></label> once completed.</p>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <h3><b><label id="escalationUserConfigExecutionTemplateResultsMessage"></label></b></h3>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-11 text-center">
+                <button id="escalationUserConfigExecutionyButton" type="button" class="btn btn-primary center-block" onclick="app.admin.ExecuteEscalationsRuleUserConfig('#= Id #')">Run Escalation</button>
+            </div>
+        </div>
+    </div>
+</script>
+<div id="executeRuleSnapShotBreachDetails"></div>
+<div id="escalationRoleConfigExecutionWindow"></div>
+<div id="escalationUserConfigExecutionWindow"></div>
+<div id="executeActurisImportSnapShotDetails"></div>
+<div id="executeExchangeAccountExecutionWindow"></div>
+<div id="executeProjectExecutionWindow"></div>
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/admin.js")"></script>
+    <script type="text/javascript">
+        var adminPageVars = {
+            vars: {
+                currentPage: "Admin",
+          
+                ExchangeRuleEnabled: @ViewBag.ExchangeRuleEnabled,
+                ExcelRuleEnabled: @ViewBag.ExcelRuleEnabled,
+                IsSystemAdmin: @ViewBag.IsSystemAdmin,
+                IsVTProject: "false",
+                IsMicroServiceProject: "false",
+            },
+            urls: {
+                adminRoot: '@Url.Action("", "Admin")'
+            },
+            tags: {
+                projectsGridId: '#projectsGrid',
+                projectUsersGridId: '#projectUsersGrid',
+                projectOfficesGridId: '#projectOfficesGrid',
+                projectTeamsGridId: '#projectTeamsGrid',
+                systemUsersGridId: '#systemUsersGrid',
+                systemUserSystemPermissionsGridId: '#systemUserSystemPermissionsGrid',
+                OfficeTeamsGridId: '#OfficeTeamsGrid',
+                OfficeUsersGridId: '#OfficeUsersGrid',
+                teamSubGridsContainerclass: '.teamSubGridsContainer',
+                officeSubGridsContainerclass: '.officeSubGridsContainer',
+                TeamUsersGridId: '#TeamUsersGrid',
+                projectRulesGridId: '#projectRulesGrid',
+                ruleConfigurationsGridId: '#ruleConfigurationsGrid',
+                projectDbDetailsGridId: '#projectDbDetailsGrid',
+                projectSchedulesGridId: '#projectSchedulesGrid',
+                ruleConfigProjectParticipantsGridId: '#ruleConfigProjectParticipantsGrid',
+                ruleConfigOfficeParticipantsGridId: '#ruleConfigOfficeParticipantsGrid',
+                ruleConfigTeamParticipantsGridId: '#ruleConfigTeamParticipantsGrid',
+                ruleConfigUserParticipantsGridId: '#ruleConfigUserParticipantsGrid',
+                projectEscalationConfigRolesGridId: '#projectEscalationConfigRolesGrid',
+                projectEscalationConfigUsersGridId: '#projectEscalationConfigUsersGrid',
+                projectEscalationConfigUsersRecipientsGridId: '#projectEscalationConfigUsersRecipientsGrid',
+                projectEscalationConfigUsersBreachSourceRuleGridId: '#projectEscalationConfigUsersBreachSourceRuleGrid',
+                projectEscalationConfigUsersBreachSourceRuleConfigGridId: '#projectEscalationConfigUsersBreachSourceRuleConfigGrid',
+                projectEscalationConfigUsersBreachSourceProjectGridId: '#projectEscalationConfigUsersBreachSourceProjectGrid',
+                projectEscalationConfigUsersBreachSourceOfficeGridId: '#projectEscalationConfigUsersBreachSourceOfficeGrid',
+                projectEscalationConfigUsersBreachSourceTeamGridId: '#projectEscalationConfigUsersBreachSourceTeamGrid',
+                projectEscalationConfigUsersBreachSourceUserGridId: '#projectEscalationConfigUsersBreachSourceUserGrid',
+                projectEscalationConfigRoleBreachSourceProjectGridId: '#projectEscalationConfigRoleBreachSourceProjectGrid',
+                projectEscalationConfigRoleBreachSourceOfficeGridId: '#projectEscalationConfigRoleBreachSourceOfficeGrid',
+                projectEscalationConfigRoleBreachSourceTeamGridId: '#projectEscalationConfigRoleBreachSourceTeamGrid',
+                projectEscalationConfigRoleBreachSourceUserGridId: '#projectEscalationConfigRoleBreachSourceUserGrid',
+                projectEscalationConfigRoleBreachSourceRuleGridId: '#projectEscalationConfigRoleBreachSourceRuleGrid',
+                projectEscalationConfigRoleBreachSourceRuleConfigGridId: '#projectEscalationConfigRoleBreachSourceRuleConfigGrid',
+                projectExclusionsGridId: '#projectExclusionsGrid',
+                projectExclusionItemsGridId: '#projectExclusionItemsGrid',
+                ruleSqlClassRefernceInputGridId: '#ruleSqlClassRefernceInputGrid',
+                ruleSqlExclusionsInputGridId: '#ruleSqlExclusionsInputGrid',
+                ruleSqlHardCodedInputGridId: '#ruleSqlHardCodedInputGrid',
+                level1TabStripClass: '.level1TabStrip',
+                level2TabStripClass: '.level2TabStrip',
+                level3TabStripClass: '.level3TabStrip',
+                level4TabStripClass: '.level4TabStrip',
+                projectBreachesGridId: '#projectBreachesGrid',
+                ruleSnapshottemplateId: '#ruleSnapshottemplate',
+                executeProjectTemplateId: '#executeProjectTemplate',
+                executeProjectExecutionWindowId: '#executeProjectExecutionWindow',
+                ruleSnapShotBreachesGridId: '#ruleSnapShotBreachesGrid',
+                rulesnapshotrunQueryButtonId: '#rulesnapshotrunQueryButton',
+                projectExecuteButtonId: '#projectExecuteButton',
+                executeRuleSnapShotBreachDetailsWindowId: '#executeRuleSnapShotBreachDetails',
+                escalationRoleConfigExecutionWindowId: '#escalationRoleConfigExecutionWindow',
+                escalationRoleConfigExecutionTemplateId: '#escalationRoleConfigExecutionTemplate',
+                escalationRoleConfigExecutionTemplateResultsMessageId: '#escalationRoleConfigExecutionTemplateResultsMessage',
+                projectActurisImportsGridId: '#projectActurisImportsGrid',
+                escalationUserConfigExecutionTemplateId: '#escalationUserConfigExecutionTemplate',
+                escalationUserConfigExecutionWindowId: '#escalationUserConfigExecutionWindow',
+                escalationUserConfigExecutionTemplateResultsMessageId: '#escalationUserConfigExecutionTemplateResultsMessage',
+                escalationUserConfigExecutionyButtonId: '#escalationUserConfigExecutionyButton',
+                projectRegionsGridId: '#projectRegionsGrid',
+                systemLogsGridId: '#systemLogsGrid',
+                systemLogErrorMessageId: '#systemLogErrorMessage',
+                systemLogStackTraceId: '#systemLogStackTrace',
+                acturisImportSnapShotTemplateId: '#acturisImportSnapShotTemplate',
+                executeActurisImportSnapShotDetailsWindowId: '#executeActurisImportSnapShotDetails',
+                acturisImportSnapShotQueryButtonId: '#acturisImportSnapShotQueryButton',
+                acturisImportSnapShotGridId: '#acturisImportSnapShotGrid',
+                userofficemembershipsGridId: '#userofficemembershipsGrid',
+                userteammembershipsGridId: '#userteammembershipsGrid',
+                projectEscalationConfigRoleEscalationsHistoryGridId: '#projectEscalationConfigRoleEscalationsHistoryGrid',
+                projectEscalationConfigRoleEscalationsHistoryEmailSubjectId: '#projectEscalationConfigRoleEscalationsHistoryEmailSubject',
+                projectEscalationConfigRoleEscalationsHistoryEmailBodyId: '#projectEscalationConfigRoleEscalationsHistoryEmailBody',
+                projectEscalationConfigRoleEscalationsHistoryEmailFromId: '#projectEscalationConfigRoleEscalationsHistoryEmailFrom',
+                projectEscalationConfigRoleEscalationsHistoryEmailToId: '#projectEscalationConfigRoleEscalationsHistoryEmailTo',
+                projectEscalationConfigRoleEscalationsHistoryPanelContentId: '#projectEscalationConfigRoleEscalationsHistoryPanelContent',
+                projectEscalationConfigUserEscalationsHistoryPanelContentId: '#projectEscalationConfigUserEscalationsHistoryPanelContent',
+                projectExchangeAccountsGridId: '#projectExchangeAccountsGrid',
+                exchangeAccountTestTemplateId: '#exchangeAccountTestTemplate',
+                exchangeAccountTestTemplateResultsMessageId: '#exchangeAccountTestTemplateResultsMessage',
+                executeExchangeAccountExecutionWindowId: '#executeExchangeAccountExecutionWindow',
+                exchangeAccountTestQueryButtonId: '#exchangeAccountTestQueryButton',
+                ruleExchangeConfigurationsGridId: '#ruleExchangeConfigurationsGrid',
+                ruleExchangeConfigExtractionItemsTableId: "#ruleExchangeConfigExtractionItemsTable",
+                ruleExcelConfigurationsGridId: "#ruleExcelConfigurationsGrid",
+                projectEscalationConfigGenericGridId: "#projectEscalationConfigGenericGrid",
+                projectEscalationConfigGSQLGridId: "#projectEscalationConfigGSQLGrid",
+                projectEscalationConfigGenericBreachSourceRuleGridId: "#projectEscalationConfigGenericBreachSourceRuleGrid",
+                projectEscalationConfigGenericBreachSourceRuleConfigGridId: "#projectEscalationConfigGenericBreachSourceRuleConfigGrid",
+                projectEscalationConfigSQLBreachSourceRuleGridId: "#projectEscalationConfigSQLBreachSourceRuleGrid"
+            }
+        }
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+            app.admin.init(adminPageVars);
+        })
+    </script>
+}

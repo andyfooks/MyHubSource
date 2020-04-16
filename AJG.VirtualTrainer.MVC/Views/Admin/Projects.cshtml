@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            Project: <select ng-model="SelectedProject" ng-options="project as project.ProjectName for project in projects"></select>
+        </div>
+        <div class="col-md-1">
+            <label>{{ SelectedProject.ProjectName }}</label>
+        </div>
+        <div class="col-md-9">
+            <label>{{ SelectedProject.ProjectName }}</label>
+        </div>
+    </div>
+</div>
+
+{{totalcount}}
+
+<table>
+    <thead><tr>Menu</tr></thead>
+    <tr>
+        <th>Project Name</th>
+        <th>Unique Id</th>
+        <th>Owner</th>
+    </tr>
+    <tr ng-repeat="x in projects">
+        @*<td>{{ $index + 1 }}</td>*@
+        <td>{{ x.ProjectDisplayName }}</td>
+        <td>{{ x.ProjectUniqueKey }}</td>
+        <td>{{ x.ProjectOwner }}</td>
+    </tr>
+    <tfoot>
+        <tr>
+            <td align="center" colspan="6   ">
+                <span class="form-group pull-left page-size form-inline">
+                    <select id="ddlPageSize" class="form-control control-color"
+                            ng-model="pageSize"
+                            ng-change="changePageSize()">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </span>
+                <div class="pull-right">
+                    <pagination total-items="totalcount" ng-change="pagechanged()" items-per-page="pageSize" direction-links="true" ng-model="pageIndex" max-size="maxsize" class="pagination" boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                    <a class="btn btn-primary">Page: {{pageIndex}} / {{numPages}}</a>
+                </div>
+
+            </td>
+
+        </tr>
+
+    </tfoot>
+</table>
+
+@section Scripts{
+
+}
+<style>
+    table, th, td {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+</style> 

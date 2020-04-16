@@ -1,0 +1,31 @@
+﻿@model VirtualTrainer.EscalationsFrameworkConfigEmailRazorModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        Hi @Model.Recipient.Name,
+
+        <h1>Attachment of All breaches with a count of @Model.EFEmailRuleConfig.BreachCount or more.</h1>
+        
+        <ul>
+            @foreach (var breach in Model.BreachLogs)
+            {
+                
+                @*<li>@breach.BreachDisplayHTML</li>*@
+                Model.SendEmail = true;
+                Model.AttachExcelofBreaches = true;
+            }
+        </ul>
+
+        <H2>Yours Sincerely,</H2>
+        <br />
+        <h2>@Model.EFEmailRuleConfig.SentFromUserName</h2>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right:25px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input, select, textarea {
+    max-width: 280px;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    background-color: #f35800;
+}
+/*#ruleConfigProjectParticipantsGrid .k-grid-edit, #ruleConfigOfficeParticipantsGrid .k-grid-edit
+{
+    display: none;
+}*/
+.k-edit-form-container
+{
+    width: 800px !important;
+}
+.k-popup-edit-form .k-edit-label
+{
+    width: 30%;
+    text-align: left;
+}
+
+/*
+    Increase the width of the textbox containers. The default one is 60%.
+    The sum of label and editor percentage widths should be around 90%, to make up for existing paddings.
+*/
+.k-popup-edit-form .k-edit-field
+{
+    width: 60%;
+}
+
+/*
+    Expand the edit textboxes and any other Kendo UI widgets.
+    In case of unexpected side effects, use widget-specific classes, instead of .k-widget.
+*/
+.k-popup-edit-form .k-edit-field > .k-textbox,
+.k-popup-edit-form .k-edit-field > .k-widget:not(.k-tooltip)
+{
+    width: 98%;
+}
+
+.k-grid td{
+    white-space: nowrap;
+}
+.Dev{
+    background-color:lightblue;
+}
+.Test{
+    background-color:green;
+}
+.UAT{
+    background-color:orange;
+}

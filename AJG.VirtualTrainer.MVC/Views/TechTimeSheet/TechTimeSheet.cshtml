@@ -1,0 +1,881 @@
+﻿@{
+    ViewBag.Title = "Tech Time Sheet";
+}
+
+<link href="~/Content/MyHub.css" rel="stylesheet" />
+<link href="~/Content/kendo/2016.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/2016.3.1118/kendo.default.min.css" rel="stylesheet" />
+<link href="~/Content/rzslider.min.css" rel="stylesheet" />
+
+<div ng-controller="TechTimeSheet">  @*ng-init="CanOverrideUser='@(ViewBag.User.IsSystemSuperUser)'">*@
+    <div ng-show="formDisabled || displayTimeSheet === false || SkipLoadingMonthData === true" class="overlay">
+        <div class="spinner">            
+            <img style="height:75px;" src="~/Content/Images/spinner.gif" />
+        </div>
+    </div>      
+    <div ng-show="userdetailsloaded" ng-cloak="">
+        <br />        
+        <div class="row">
+            <div class="col-md-2">
+                <div ng-show="AuthenticatedUser.UserPerms.IsProjectSuperUser">                   
+                    <select ng-model="devSelectedOverrideUser" ng-change="loadUserDetails()" ng-options="x.UserDetails.FullName for x in devOverrideUsers"></select>
+                </div>               
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-2" style="text-align:left;">
+                        <label>User Name:</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{treeUserSelection.UserDetails.FullName || treeUserSelection.UserDetails.SamAccountName}}
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="text-align:left;">
+                        <label>Employee ID:</label>
+                    </div>
+                    <div class="col-md-10">
+                       {{treeUserSelection.UserDetails.EmployeeID}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="text-align:left;">
+                        <label>Title:</label>
+                    </div>
+                    <div class="col-md-10">
+                        {{treeUserSelection.UserDetails.Title}}
+                    </div>
+                </div>                                 
+            </div> 
+            <div class="col-md-4">          
+                @*<div>                                                                
+                    <button ng-click="ShowMessage(TestMessageMessage,TestMessageParentID,TestMessageDelay, TestMessageAutoFadeOut, TestMessageAlertContext)">Test Message</button>
+                    <input placeholder="Message" type="text" ng-model="TestMessageMessage" />
+                    <input placeholder="Delay" type="number" ng-model="TestMessageDelay" />
+                    <input placeholder="Target Parent Element ID" type="text" ng-model="TestMessageParentID" />
+                    <select ng-model="TestMessageAlertContext">
+                        <option value="info">info</option>
+                        <option value="warning">warning</option>
+                        <option value="danger">danger</option>
+                        <option value="success">success</option>
+                    </select>
+                    <input type="checkbox" ng-init="TestMessageAutoFadeOut = true" ng-model="TestMessageAutoFadeOut" />
+                </div>*@      
+                <div id="messages" style="width: 25%; position: fixed; z-index: 1030; top: 60px; right: 10px;"></div>                              
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                <div class="row">                                        
+                    <div class="col-md-12">
+                        <div class="row" ng-show="devSelectedOverrideUser.HasManagess === true">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <input style="width:100%;" placeholder="Load User in Tree" type="text" ng-model="treeSearchUser" />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button ng-show="treeSearchUser !== undefined && treeSearchUser !== null && treeSearchUser !== '' && treeSearchUser.length > 2" ng-click="LoadSpecificTreeUser(treeSearchUser)">Load</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label ng-show="LoadSpecificTreeUserData.matchedCount > 1" ng-click="LoadSpecificTreeUserData = null;treeSearchUser = ''">Clear</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" id="treeMultiUsersFoundDiv"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" ng-show="LoadSpecificTreeUserData.matchedCount > 1">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <button title="{{user.UserSummaryInfo}}" ng-repeat="user in LoadSpecificTreeUserData.MatchedUsers" ng-click="LoadSpecificTreeUser(user.id)">{{user.UserDisplayName}}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                                                             
+                        <div id="tree" style="max-height:800px; overflow-y:auto;" kendo-tree-view="tree" k-data-source="treeData" k-on-change="treeUserSelection = dataItem; LoadMonthData('')">
+                            <span k-template>
+                                <label title="{{dataItem.UserSummaryInfo}}">{{dataItem.UserDetails.FullName || dataItem.UserDetails.SamAccountName}}</label>
+                            </span>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <rzslider rz-slider-model="DateRangeSlider.minValue"
+                                  rz-slider-high="DateRangeSlider.maxValue"
+                                  rz-slider-options="DateRangeSlider.options"></rzslider>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12" style="text-align:right;">
+                        Show Time Sheet: <input type="checkbox" ng-click="ResetAdminForms()" ng-model="showTimeSheetChecked" aria-label="Toggle ngShow">
+                    </div>
+                </div>                
+                <form name="timeSheetForm" id="timeSheetForm" ng-show="showTimeSheetChecked && formDisabled === false && displayTimeSheet === true">    
+                    <div class="row" ng-if="(MonthData.UserSamAccount !== treeUserSelection.UserDetails.SamAccountName) && formDisabled === false">
+                        <div class="col-md-12 alert-danger">
+                            <p>OMG the Time sheet below is not for the User Selected in the Tree!</p>
+                            <p>Please try again. Contact Help desk if the issue continues.</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1" style="text-align:left;">
+                            <label>Completed:</label>
+                        </div>
+                        <div class="col-md-1" style="text-align:center;" ng-style="{'background-color':(!FormComplete() ? '#A7FDA6':'#FDA6A6')}">
+                            {{!FormComplete()}}
+                        </div>
+                        <div class="col-md-1" style="text-align:left;">
+                            <label>Submitted:</label>
+                        </div>
+                        <div class="col-md-2" style="text-align:center;" ng-style="{'background-color':(MonthData.IsSubmitted ? '#A7FDA6':'#FDA6A6')}">
+                            <div ng-show="MonthData.IsSubmitted">
+                                On: <b>{{MonthData.SubmittedTimeStamp.slice(6, -2) | date:'MMMM d, y'}}</b>
+                                , By: <b>{{MonthData.SubmittedBySamAccountName}}</b>
+                            </div>
+                            <div ng-show="!MonthData.IsSubmitted">
+                                {{MonthData.IsSubmitted}}
+                            </div>
+                        </div>
+                        <div ng-if="MonthData.ApprovalRequired" class="col-md-1" style="text-align:left;">
+                            <label>Approved:</label>
+                        </div>
+                        <div class="col-md-2" style="text-align:center;">
+                            <div ng-if="MonthData.ApprovalRequired" ng-style="{'background-color':(MonthData.Approved ? '#A7FDA6':'#FDA6A6')}">
+                                <div ng-show="MonthData.Approved">
+                                    On: <b>{{MonthData.ApprovedTimeStamp.slice(6, -2) | date:'MMMM d, y'}}</b>
+                                    , By: <b>{{MonthData.approvedBySamAccountName}}</b>
+                                </div>
+                                <div ng-show="!MonthData.Approved">
+                                    {{MonthData.Approved}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" style="text-align: right;">
+                            <div ng-show="MonthData.CascadingDropDownListOutOfDate === true && MonthData.IsSubmitted === false">
+                                Time Sheet DDL have been changed by the Administrator:
+                                <button title="the Drop down lists have been changed" ng-click="performMonthDataAction('GetLatestDDL')">Get Latest</button>
+                            </div>
+                        </div>                        
+                    </div>                    
+                    <fieldset class="check-element animate-show-hide"
+                              form="timeSheetForm" 
+                              ng-disabled="(MonthData.IsSubmitted === true || (treeUserSelection.UserDetails.SamAccountName !== AuthenticatedUser.ADUser.UserDetails.SamAccountName && AuthenticatedUser.UserPerms.IsProjectSuperUser !== true))">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" >
+                                <div>
+                                    <table name="timeSheetTable" class="table table-striped" style="padding:1px!important;">
+                                        <thead id="TimeSheetHeader">
+                                            <tr>
+                                                <td style="text-align:center;">Team</td>
+                                                <td style="text-align:center;width:20em;min-width:20em;max-width:20em;">
+                                                    <select title="Team: {{MonthData.SelectedTeamName}}"
+                                                            name='Team'
+                                                            id="Team"
+                                                            class="form-control"
+                                                            ng-model="MonthData.SelectedTeamName"
+                                                            ng-change="setDropDownSelection(MonthData.SelectedTeamName,'','team')"
+                                                            style="width: 100% !important; min-width: 100% !important; max-width: 100% !important;"
+                                                            required>
+                                                        <option ng-selected="MonthData.SelectedTeamName === team.Name" ng-repeat="team in MonthData.CascadingDropDownList" ng-value="team.Name">{{team.Name}}</option>
+                                                    </select>
+                                                </td>
+                                                <td style="text-align:center;" ng-repeat="location in MonthData.DayLocations track by $index" ng-if="MonthData.thisMonthsDates[$index].isWorkDay">
+                                                    <select style="width:100%; padding:0!important;"
+                                                            ng-disabled="!MonthData.thisMonthsDates[$index].isWorkDay;"
+                                                            name="location{{$index}}"
+                                                            title="Location: {{MonthData.DayLocations[$index]}}"
+                                                            class="form-control"
+                                                            ng-model="MonthData.DayLocations[$index]"
+                                                            ng-right-click="inputRightClick($index,$event,MonthData.DayLocations)"
+                                                            ng-options="location as location for location in Locations"
+                                                            ng-required="MonthData.LocationRequired === true"
+                                                            ng-style="{'border-color':(timeSheetForm['location' + $index].$invalid && MonthData.IsSubmitted === false ?'red':'')}"></select>
+                                                </td>                                                
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:center;width:6em;min-width:6em;max-width:6em;"></td>
+                                                <td style="text-align:center;width:20em;min-width:20em;max-width:20em;">Activity Information</td>                                                
+                                                <td style="text-align:center;" ng-repeat="d in MonthData.thisMonthsDates" ng-if="d.isWorkDay">
+                                                    <div style="width:3.5em!important; text-align:center;" ng-attr-title="{{d.isBankHoliday ? 'Bank Holiday' : ''}}"
+                                                         ng-style="{'color':(d.isWorkDay ?'green':'red')}">{{d.DateTime.slice(6, -2) | date:'EEE'}}<br />{{d.DateTime.slice(6, -2) | date:'dd'}}</div>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="text-align:center;" ng-repeat="tsd in MonthData.TimeSheetActviityLogRows track by $index">
+                                                <td style="text-align:center;width:6em;min-width:6em;max-width:6em;">
+                                                    <button ng-show="MonthData.TimeSheetActviityLogRows.length > 1" ng-click="DeleteRow($index)">Delete Row</button>
+                                                </td>
+                                                <td style="text-align:center;width:20em;min-width:20em;max-width:20em;">
+                                                    <select style="width: 100% !important; min-width: 100% !important; max-width: 100% !important;"
+                                                            ng-show="MonthData.Team !== null"
+                                                            name="itactivity_{{$index}}"
+                                                            ng-style="{'border-color':(timeSheetForm['itactivity_' + $index].$invalid ?'red':'')}"
+                                                            title="Activity: {{MonthData.TimeSheetActviityLogRows[$index].SelectedActivityName}}"
+                                                            class="form-control"
+                                                            ng-change="{{setDropDownSelection(MonthData.TimeSheetActviityLogRows[$index], activity.Name, 'activity')}}"
+                                                            ng-model="MonthData.TimeSheetActviityLogRows[$index].SelectedActivityName"
+                                                            required>
+                                                        <option ng-selected="MonthData.TimeSheetActviityLogRows[$index].SelectedActivityName === activity.Name"
+                                                                ng-repeat="activity in MonthData.Team.CascadeItems"
+                                                                ng-value="activity.Name">
+                                                            {{activity.Name}}
+                                                        </option>
+                                                    </select>
+                                                    <input style="width: 90%;margin-left: 10%;"
+                                                           name="ActivityDisplayFreeTextInputField_{{$index}}"
+                                                           ng-if="MonthData.TimeSheetActviityLogRows[$index].ItActivity.DisplayFreeTextInputField === true"
+                                                           ng-model="MonthData.TimeSheetActviityLogRows[$index].SelectedActivityFreeTextValue"
+                                                           ng-required="MonthData.TimeSheetActviityLogRows[$index].ItActivity.DisplayFreeTextInputFieldRequired === true"
+                                                           ng-style="{'border-color':(timeSheetForm['ActivityDisplayFreeTextInputField_' + $index].$invalid ?'red':'')}"
+                                                           type="text" />
+                                                    <select style="width: 100% !important; min-width: 100% !important; max-width: 100% !important;"
+                                                            ng-show="MonthData.TimeSheetActviityLogRows[$index].ItActivity !== null"
+                                                            name="workItem_{{$index}}"
+                                                            ng-style="{'border-color':(timeSheetForm['workItem_' + $index].$invalid ?'red':'')}"
+                                                            title="Work Item: {{MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTaskName}}"
+                                                            class="form-control"
+                                                            ng-change="{{setDropDownSelection(MonthData.TimeSheetActviityLogRows[$index], WorkItem.Name, 'WorkItem')}}"
+                                                            ng-model="MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTaskName"
+                                                            required>
+                                                        <option ng-selected="MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTaskName === WorkItem.Name"
+                                                                ng-repeat="WorkItem in MonthData.TimeSheetActviityLogRows[$index].ItActivity.CascadeItems"
+                                                                ng-value="WorkItem.Name">
+                                                            {{WorkItem.Name}}
+                                                        </option>
+                                                    </select>
+                                                    <input style="width: 90%;margin-left: 10%;"
+                                                           name="DisplayFreeTextInputField_{{$index}}"
+                                                           ng-if="MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTask.DisplayFreeTextInputField === true"
+                                                           ng-model="MonthData.TimeSheetActviityLogRows[$index].SelectedWorkItemFreeTextValue"
+                                                           ng-required="MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTask.DisplayFreeTextInputFieldRequired === true"
+                                                           ng-style="{'border-color':(timeSheetForm['DisplayFreeTextInputField_' + $index].$invalid ?'red':'')}"
+                                                           type="text" />
+                                                    <select ng-show="MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTask !== null"
+                                                            name="businessUnit_{{$index}}"
+                                                            ng-style="{'border-color':(timeSheetForm['businessUnit_' + $index].$invalid ?'red':'')}"
+                                                            style="width: 100% !important; min-width: 100% !important; max-width: 100% !important;"
+                                                            title="Business Unit: {{MonthData.TimeSheetActviityLogRows[$index].BusinessUnitName}}" class="form-control"
+                                                            ng-model="MonthData.TimeSheetActviityLogRows[$index].BusinessUnitName"
+                                                            ng-change="setDropDownSelection(MonthData.TimeSheetActviityLogRows[$index], unit.Name, 'BU')"
+                                                            required>
+                                                        <option ng-selected="MonthData.TimeSheetActviityLogRows[$index].BusinessUnitName === unit.Name"
+                                                                ng-repeat="unit in MonthData.TimeSheetActviityLogRows[$index].WorkItemOrProjectTask.CascadeItems"
+                                                                ng-value="unit.Name">
+                                                            {{unit.Name}}
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td style="text-align:center;" 
+                                                    ng-style="{'background-color':(getTotal($index) !== 100 && MonthData.thisMonthsDates[$index].isWorkDay === true ? '#FDA6A6':'#A7FDA6')}"
+                                                    ng-repeat="percentEntryField in tsd.dataEntryFields track by $index" 
+                                                    ng-if="MonthData.thisMonthsDates[$index].isWorkDay">
+                                                    <input style="width:100%;text-align:center;"
+                                                           ng-disabled="!MonthData.thisMonthsDates[$index].isWorkDay || MonthData.IsSubmitted"
+                                                           ng-model="tsd.dataEntryFields[$index]"
+                                                           ng-right-click="inputRightClick($index,$event,tsd.dataEntryFields)"
+                                                           numbers-only type="number" min="0" max="100" />
+                                                </td>
+                                            </tr>
+                                            <tr style="text-align:center;">
+                                                <td colspan="2">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            @*<button class="timesheetbutton" ng-disabled="MonthData.IsSubmitted" ng-click="AddRow()">Add Row</button>*@
+                                                        </div>
+                                                        <div style="text-align:right;" class="col-md-6">
+                                                            <label>Total %</label>
+                                                        </div>
+                                                    </div>                                                
+                                                </td>
+                                                <td ng-style="{'background-color':(getTotal($index) !== 100 && MonthData.thisMonthsDates[$index].isWorkDay === true ? '#FDA6A6':'#A7FDA6')}"
+                                                    ng-repeat="tot in MonthData.thisMonthsDates track by $index"
+                                                    ng-if="MonthData.thisMonthsDates[$index].isWorkDay">
+                                                    <label>{{MonthData.thisMonthsDates[$index].isWorkDay === true ? getTotal($index) : ""}}</label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <div class="info" ng-click="hideMe('.info')">
+                                        <button ng-click="copyToEndof('week')" ng-blur="hideMe('.info')" title="Copy To End of week" style="width:100%">Copy to EOW</button>
+                                        <button ng-click="copyToEndof('month')" ng-blur="hideMe('.info')" title="Copy To End of Month" style="width:100%">Copy to EOM</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button class="timesheetbutton" ng-disabled="MonthData.IsSubmitted" ng-click="AddRow()">Add Row</button>
+                            </div>
+                            <div class="col-md-11" style="text-align:right;">
+                                <button class="timesheetbutton" ng-disabled="MonthData.IsSubmitted" ng-click="performMonthDataAction('Save')">Save</button>                                
+                                <button class="timesheetbutton" ng-disabled="FormComplete() || MonthData.IsSubmitted" title="Enables once form is fully completed" ng-click="performMonthDataAction('Submit')">Save and Submit</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*{{MonthData}}*@
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="row check-element animate-show-hide">
+                        <div class="col-md-4">
+                            <button class="timesheetbutton" ng-click="performMonthDataAction('SaveAsTemplate')">Save As Template</button>
+                            <button class="timesheetbutton" ng-show="MonthData.IsSubmitted === false && MonthData.TemplateAvailable === true" ng-click="performMonthDataAction('getSavedTemplate')">Apply Saved Template</button>
+                            <button class="timesheetbutton" ng-show="MonthData.IsSubmitted === false && MonthData.TemplateAvailable === true" ng-click="performMonthDataAction('DeleteSavedTemplate')">Delete Saved Template</button>
+                        </div>
+                        <div class="col-md-8" style="text-align:right;">
+                            <button class="timesheetbutton" title="Approve"
+                                    ng-if="MonthData.ApprovalRequired"
+                                    ng-show="((treeUserSelection.ManagerDetails.SamAccountName === AuthenticatedUser.ADUser.UserDetails.SamAccountName) 
+                                    || AuthenticatedUser.UserPerms.IsProjectSuperUser === true) && MonthData.IsSubmitted === true"
+                                    ng-disabled="!MonthData.IsSubmitted === true || MonthData.Approved === true" ng-click="performMonthDataAction('Approve')">
+                                Approve
+                            </button>     
+                            <button class="timesheetbutton" title="Un-Submit"
+                                    ng-show="((treeUserSelection.ManagerDetails.SamAccountName === AuthenticatedUser.ADUser.UserDetails.SamAccountName) || AuthenticatedUser.UserPerms.IsProjectSuperUser === true) && MonthData.IsSubmitted === true"
+                                    ng-disabled="MonthData.IsSubmitted === false" ng-click="performMonthDataAction('Unsubmit')">
+                                Un-Submit
+                            </button>
+                            <button class="timesheetbutton" title="Save to Reporting Db"
+                                    ng-show="AuthenticatedUser.UserPerms.IsProjectSuperUser === true || AuthenticatedUser.UserPerms.IsProjectAdmin === true && MonthData.IsSubmitted === true"
+                                    ng-disabled="MonthData.IsSubmitted === false" ng-click="SubmitUserTimSheetsToDB(treeUserSelection.UserDetails.EmployeeID)">
+                                Save to Reporting DB
+                            </button>                            
+                        </div>
+                    </div>
+                </form>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12" style="text-align:right;" ng-show="(AuthenticatedUser.AdminActions && AuthenticatedUser.AdminActions.length > 0)">
+                        Show Admin Tasks: <input type="checkbox" ng-change="ResetAdminForms()" ng-model="showActions" aria-label="Toggle ngShow">
+                    </div>
+                </div>
+                <br />
+                <div ng-show="(AuthenticatedUser.AdminActions && AuthenticatedUser.AdminActions.length > 0) && showActions">
+                    <div class="row">
+                        <div class="col-md-1"><b>Admin Tasks</b></div>
+                        <div class="col-md-11">
+                            <select title="" name="admintasks" id="admintasks" class="form-control fullWidth"
+                                    ng-change="AdminTaskChanged(SelectedAdminAction.Value)"                                 
+                                    ng-model="SelectedAdminAction"                                
+                                    ng-options="action as action.Key for action in AuthenticatedUser.AdminActions"
+                                    required></select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row" style="border:2px solid #0db9f0; padding: 10px;" 
+                         ng-show="SelectedAdminAction.Value === 'TechTimeSheetAccess' || SelectedAdminAction.Value === 'LocationRequired' || 
+                                     SelectedAdminAction.Value === 'ApprovalRequired' || SelectedAdminAction.Value === 'SaveToDB'">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p><b>{{SelectedAdminAction.Key}}:</b></p>
+                                        <p>Select user in tree, then click 'Set User' on the required row. Then configure as requried.</p>
+                                        <p>Order or rule application: 1. Default = No, 2. Apply Yes rules, 3. Apply No Rules.</p>
+                                        <p><b>(Note: Or should we apply the rules general to specific: e.g. all subordinates, then team, then individual?)</b></p>
+                                    </div>
+                                </div>  
+                                <div class="row">
+                                    <div class="col-md-12" ng-if="SelectedAdminAction.Value === 'SaveToDB'">
+                                        <button style="width:100%;" ng-click="SubmitUserTimSheetsToDB()">Submit Timesheets to Reporting DB</button>
+                                    </div>
+                                </div>                                                     
+                            </div>
+                            <div class="col-md-8">
+                                <ul style="height: 450px; min-height: 450px; max-height: 450px; overflow-y: auto; overflow-x:hidden;">
+                                    <li style="list-style: none" ng-repeat="rule in TimeSheetRuleList track by $index">
+                                        <div class="row">
+                                            <div class="col-md-2">                                            
+                                                <input ng-required="true" style="width:100%;" title="User" type="text" disabled="disabled" ng-value="rule.UserID" />                                  
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="timesheetbutton" ng-click="TimeSheetRuleList[$index].UserID = treeUserSelection.UserDetails.SamAccountName">Set User</button>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <select title="Target" ng-model="rule.Target">                                                
+                                                    <option ng-selected="rule.Target === 0" ng-value="0">User</option>
+                                                    <option ng-selected="rule.Target === 1" ng-value="1">Team</option>
+                                                    <option ng-selected="rule.Target === 2" ng-value="2">All Subordinates</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2" title="Include">                                           
+                                                <select ng-if="SelectedAdminAction.Value !== 'SaveToDB'" ng-model="rule.Permission">
+                                                    <option ng-selected="rule.Target === 0" ng-value="0">Yes</option>
+                                                    <option ng-selected="rule.Target === 1" ng-value="1">No</option>                                                
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
+                                                Enabled: <input type="checkbox" ng-model="rule.Enabled" ng-value="rule.Enabled" />
+                                            </div>                                        
+                                            <div style="text-align:right" class="col-md-2">
+                                                <button class="timesheetbutton" ng-click="DeleteArrayItem(TimeSheetRuleList, $index)">Delete</button>
+                                            </div>                                                                                                                       
+                                        </div>
+                                    </li>
+                                    <li style="list-style: none; margin-top:10px;" >
+                                        <div class="row">
+                                            <div class="col-md-8"></div>
+                                            <div class="col-md-4 text-right">
+                                                <button class="timesheetbutton" ng-click="AddItemAsCloneToList(TimeSheetRuleList, TimeSheetRuleTemplate)">Add New Rule</button>                                        
+                                                <button class="timesheetbutton" ng-click="SaveAdminSingleFieldSetting(TimeSheetRuleList, SelectedAdminAction.Value)">Save</button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>                        
+                        </div>
+                    </div>
+                    <div class="row" style="border:2px solid #0db9f0; padding: 10px;" ng-show="SelectedAdminAction.Value === 'SendEmail'">
+                        <div class="col-md-12">
+                            <select class="form-control"
+                                    ng-model="SelectedAdminBulkAction"
+                                    ng-change="AdminBulkActionChange(SelectedAdminBulkAction.Value)"
+                                    ng-options="action as action.Key for action in AuthenticatedUser.AdminBulkActions"
+                                    style="width:100%!important;min-width:100%!important;max-width:100%!important;"
+                                    required></select>
+                        </div>
+                        <div class="col-md-12">
+                                <div class="row" ng-show="SelectedAdminBulkAction !== undefined">
+                                    <div class="col-md-2">
+                                        <select title="Target Users"
+                                                class="form-control fullWidth"
+                                                ng-model="selectedGroupUseronthlyStatus"
+                                                ng-options="choice as choice for choice in UserStatusDropDown"
+                                                required></select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select title="Time Sheet State"
+                                                class="form-control fullWidth"
+                                                ng-model="targetUserStatus"
+                                                ng-options="choice as choice for choice in targetUserStatuses"
+                                                ng-show="selectedGroupUseronthlyStatus !== ''"
+                                                required>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button style="min-width:100%" ng-show="selectedGroupUseronthlyStatus !== '' && targetUserStatus !== ''" ng-click="GetTimeSheetStatusForManager()">Get Users</button>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                </div>
+                                <br />                                
+                                <div class="row" ng-show="SelectedAdminBulkAction !== undefined">
+                                    <div class="col-md-4">
+                                        <div style="max-height:550px;height:550px;min-height:550px; overflow-x:auto;">
+                                            {{AdminBulkAction_Table_HideUnchecked}}
+                                            <table name="timeSheetTable" style="padding:1px!important;width:100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <td ng-attr-title="Total: {{EmailRecipients.length}}" style="text-align:center;">User Name</td>
+                                                        <td ng-attr-title="Submitted: {{GetEmailRecipientTotal('Submitted')}}" style="text-align:center;">Submitted</td>
+                                                        <td ng-attr-title="Approved: {{GetEmailRecipientTotal('Approved')}}" style="text-align:center;">Approved</td>
+                                                        <td ng-attr-title="Include: {{GetEmailRecipientTotal('Include')}}" style="text-align:center;">Include
+                                                            <input title="Hide Unchecked" ng-model="AdminBulkAction_Table_HideNotIncludedRows" type="checkbox" />
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr title="Right click Row for more details" ng-repeat="recipient in EmailRecipients track by $index" ng-right-click="showUserDetails($index,$event)" 
+                                                        ng-hide="(AdminBulkAction_Table_HideNotIncludedRows === true && EmailRecipients[$index].Include === false)" 
+                                                        ng-mouseleave="hideMe('#showRecipientDetails')" ng-blur="hideMe('#showRecipientDetails')">
+                                                        <td style="text-align:center;">{{recipient.UserName}}</td>
+                                                        <td style="text-align:center;" ng-style="{'background-color':(recipient.Submitted === true ? '#A7FDA6':'#FDA6A6')}">{{recipient.Submitted}}</td>
+                                                        <td style="text-align:center;" ng-style="{'background-color':(recipient.Approved === true ? '#A7FDA6':'#FDA6A6')}">{{recipient.Approved}}</td>
+                                                        <td style="text-align:center;" ng-attr-title="{{EmailRecipients[$index].Email === '' ? 'No Email' : ''}}">
+                                                            <input ng-disabled="EmailRecipients[$index].Email === ''" type="checkbox" ng-model="EmailRecipients[$index].Include" aria-label="Toggle ngShow" ng-change="UpdateWorkingEmailTemplate(); UpdateEmailTo()">
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="userdetails hideMe" id="showRecipientDetails">
+                                                <label>Sam Account Name: </label> {{userDetailsHoverItem.SamAccountName}}<br />
+                                                <label>Employee Id: </label> {{userDetailsHoverItem.EmployeeID}}<br />
+                                                <label>Email: </label> {{userDetailsHoverItem.Email}}<br />
+                                                <label>ManagerEmail: </label> {{userDetailsHoverItem.ManagerEmail}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="row" ng-show="EmailRecipients !== null && EmailRecipients.length > 0">                                        
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                User Filter/Email Template
+                                                                <br/>
+                                                                <select title="Email Template"
+                                                                        class="form-control"
+                                                                        ng-model="SelectedEmailTemplate"
+                                                                        ng-change="SetEmailSubAndBody()"
+                                                                        ng-options="temp as temp.DisplayText for temp in EmailTemplates"
+                                                                        style="width: 100% !important; min-width: 100% !important; max-width: 100% !important;"
+                                                                        ng-attr-title="{{SelectedEmailTemplate.Description}}"
+                                                                        ng-show="true"
+                                                                        required></select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" ng-show="AuthenticatedUser.UserPerms.IsProjectAdmin">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <button style="min-width: 48%" ng-click="ShowEmailTemplateEditor('New',$event)">New</button>
+                                                                        <button style="min-width: 48%" ng-show="SelectedEmailTemplate !== null && SelectedEmailTemplate.DisplayText !== ''" ng-click="ShowEmailTemplateEditor('Update',$event)">Edit</button>
+                                                                    </div>
+                                                                </div>
+                                                                <div style="background-color: lightgray; z-index: 1000; padding: 5px; width: 350px;" class="hideMe" id="saveUpdateEmailTemplate">
+                                                                    <div class="row" id="saveUpdateEmailTemplateheader">
+                                                                        <div class="col-md-10">
+                                                                            <label>{{EMailTemplateEditWindowTitle}}</label>
+                                                                        </div>
+                                                                        <div class="col-md-2" style="text-align: right;">
+                                                                            <img alt="drag me" style="height: 15px;" src="~/Content/Images/drag.png"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-5">
+                                                                            <label>Template Name</label>
+                                                                        </div>
+                                                                        <div class="col-md-7">
+                                                                            <input style="width: 100%;" ng-model="workingTemplate.DisplayText" type="text"/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-5">
+                                                                            <label>Template Description</label>
+                                                                        </div>
+                                                                        <div class="col-md-7">
+                                                                            <textarea style="width: 100% !important; max-width: 100% !important;" ng-model="workingTemplate.Description" rows="5"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-5">
+                                                                            <label>Include unchecked Users</label>
+                                                                        </div>
+                                                                        <div class="col-md-7">
+                                                                            <input type="checkbox" ng-model="workingTemplate.IncludeUncheckedUsers" aria-label="Toggle ngShow">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-5">
+                                                                        </div>
+                                                                        <div class="col-md-7">
+                                                                            <button ng-click="hideMe('#saveUpdateEmailTemplate')">Cancel</button>
+                                                                            <button ng-click="UpdateEmailTemplate('false')" ng-show="workingTemplate.DisplayText !== null && workingTemplate.DisplayText !== ''">Save</button>
+                                                                            <button ng-click="UpdateEmailTemplate('true')" ng-show="EmailTemplateAction !== 'New' && workingTemplate.DisplayText !== null && workingTemplate.DisplayText !== ''">Delete</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9" style="border:2px solid #0db9f0; padding: 10px;" ng-show="SelectedAdminBulkAction.Value === 'SendEmail'">
+                                                <div class="row">
+                                                    <div class="col-md-10" >
+                                                        <div class="row">
+                                                            <div class="col-md-1" style="text-align:right;">
+                                                                to:
+                                                            </div>
+                                                            <div class="col-md-11">
+                                                                <textarea style="width:100%!important;max-width:100%!important;" rows="2" ng-model="EmailTo"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-1" style="text-align:right;">
+                                                                Subject:
+                                                            </div>
+                                                            <div class="col-md-11">
+                                                                <textarea style="width:100%!important;max-width:100%!important;" rows="2" ng-model="EmailSubject"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-1" style="text-align:right;">
+                                                                Body:
+                                                            </div>
+                                                            <div class="col-md-11">
+                                                                <textarea style="width:100%!important;max-width:100%!important;" rows="22" ng-model="EmailContent"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button title="If the email doesnt open, then the content may have exceeded the URL length. Please copy and paste fields into the email manually"
+                                                                style="min-width:100%" ng-show="EmailTo !== '' && EmailSubject !== '' && EmailContent !== ''"
+                                                                ng-click="sendEmail(EmailTo,EmailSubject,EmailContent)">
+                                                            Send Email
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-9" style="border:2px solid #0db9f0; padding:10px;" ng-show="SelectedAdminBulkAction.Value  === 'SaveToDB'">
+                                                Submit to DB
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <lebel>Add checked users (left) to required list (right)</lebel><br /><br />
+                                                        <button class="fullWidth" ng-click="AddToCurrentAdminBulkActionUsers()">Add</button>
+                                                    </div>
+                                                    <div class="col-md-6" style="border: 1px solid #0db9f0">
+                                                        <ul style="height: 450px; min-height: 450px; max-height: 450px; overflow-x: auto;">
+                                                            <li style="list-style: none" ng-repeat="user in CurrentAdminBulkActionUsers track by $index">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        {{user}}
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <button ng-click="DeleteArrayItem(CurrentAdminBulkActionUsers, $index)">Delete</button>
+                                                                    </div>
+                                                                    <div class="col-md-2"></div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button class="fullWidth" ng-click="SubmitUserTimSheetsToDB()">Save To DB</button>
+                                                    </div>
+                                                </div>
+                                            </div>                                           
+                                        </div>                                                                                                   
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="row" style="border:2px solid #0db9f0; padding: 10px;" ng-show="SelectedAdminAction.Value === 'ConfigureDropDownLists'">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button ng-click="GetDDLOptions()">Load DDL Data</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Team</label>
+                                    <select size="20" ng-options="option as option.Name for option in DDLOptions.latestCascadeDDL" class="form-control fullWidth" ng-click="test($event)" ng-model="selectedTeam" ng-change="showDDItemEditor(selectedTeam,DDLOptions.latestCascadeDDL, $event)"></select>
+                                    <button class="fullWidth" ng-click="AddDDLItem(DDLOptions.latestCascadeDDL, 'Team')">Add Team</button>       
+                                    <button class="fullWidth" ng-click="CreateDDItemFromClipBoard(DDLOptions.latestCascadeDDL)">Add From Clipboard</button>                         
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    <label>Activity</label>                                    
+                                    <select size="20" class="form-control fullWidth" ng-options="activity as activity.Name for activity in selectedTeam.CascadeItems" ng-model="selectedActivity" ng-click="test($event)" ng-change="showDDItemEditor(selectedActivity,selectedTeam.CascadeItems, $event)"></select>
+                                    <button class="fullWidth" ng-click="AddDDLItem(selectedTeam.CascadeItems, 'Activity')">Add Activity</button>     
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    <label>Work Item</label>                                    
+                                    <select size="20" class="form-control fullWidth" ng-options="WorkItem as WorkItem.Name for WorkItem in selectedActivity.CascadeItems" ng-click="test($event)" ng-model="selectedWorkItem" ng-change="showDDItemEditor(selectedWorkItem,selectedActivity.CascadeItems, $event)"></select>                                      
+                                    <button class="fullWidth" ng-click="AddDDLItem(selectedActivity.CascadeItems, 'WorkItem')">Add Work Item</button>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2">
+                                    <label>Business Unit</label>                                    
+                                    <select size="20" class="form-control fullWidth" ng-options="BU as BU.Name for BU in selectedWorkItem.CascadeItems" ng-click="test($event)" ng-model="selectedBusinessUnit" ng-change="showDDItemEditor(selectedBusinessUnit,selectedWorkItem.CascadeItems, $event, false)"></select>                                      
+                                    <button class="fullWidth" ng-click="AddDDLItem(selectedWorkItem.CascadeItems, 'BU')">Add Business Unit</button> 
+                                </div>
+                                <div class="col-md-1"></div>                               
+                                <div class="userdetails hideMe" id="DDItemEditor" style="width:200px;" ng-mouseleave="hideMe('#DDItemEditor')">
+                                    <div ng-click="hideMe('#DDItemEditor')" class="row">
+                                        <div class="col-md-10"></div>
+                                        <div ng-click="hideMe('#DDItemEditor')" class="col-md-2"><b>X</b></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="fullWidth">
+                                                {{ddItemToEdit.DDLItemLevel}} Name: <input class="fullWidth" type="text" ng-disabled="ddItemToEdit.IsFreetext === true" ng-model="ddItemToEdit.Name" />
+                                            </div>   
+                                            <div class="fullWidth" ng-show="ddItemToEdit.DDLItemLevel === 'Team'">
+                                                <div>
+                                                    High Level Team Name: <input class="fullWidth" type="text" ng-required="true" ng-model="ddItemToEdit.HighLevelTeamName" />
+                                                </div>
+                                            </div>
+                                            <div class="fullWidth" ng-show="ddItemToEdit.DDLItemLevel === 'Activity'">
+                                                Activity Internal Name:
+                                                <input class="fullWidth" type="text" ng-required="true" ng-model="ddItemToEdit.ActivityInternalName" />                                           
+                                                <div class="list-group">
+                                                    High Level Activity Type: 
+                                                    <div class="list-group-item">
+                                                        <input ng-model="ddItemToEdit.HighLevelActivityType" value="BAU" type="radio" name="HighLevelActivityType-Type" />
+                                                        BAU
+                                                    </div> 
+                                                    <div class="list-group-item">
+                                                        <input ng-model="ddItemToEdit.HighLevelActivityType" value="General" type="radio" name="HighLevelActivityType-type">
+                                                        General
+                                                    </div>   
+                                                    <div class="list-group-item">
+                                                        <input ng-model="ddItemToEdit.HighLevelActivityType" value="Change Stack Project" type="radio" name="HighLevelActivityType-type">
+                                                        Change Stack Project
+                                                    </div>                                            
+                                                </div>
+                                            </div>
+                                            <div class="fullWidth" ng-show="ddItemToEdit.DDLItemLevel === 'WorkItem'">
+                                                <div class="list-group">  
+                                                    Expenditure Type:
+                                                    <div class="list-group-item">
+                                                        <input ng-model="ddItemToEdit.ExpenditureType" value="OpEx" type="radio" name="Expenditure-Type">
+                                                        OpEx
+                                                    </div>         
+                                                    <div class="list-group-item">
+                                                        <input ng-model="ddItemToEdit.ExpenditureType" value="CapEx" type="radio" name="Expenditure-type">
+                                                        CapEx
+                                                    </div>                                                                                          
+                                                </div>
+                                            </div>                                     
+                                            <div class="fullWidth" ng-show="ddItemToEdit.DDLItemLevel !== 'Team'">
+                                                <div>
+                                                    Is FreeText Only Field: 
+                                                    <input type="checkbox" ng-change="ddItemFreetextCheckChanged()" ng-model="ddItemToEdit.IsFreetext" />
+                                                </div>
+                                                <div>Display Freetext Field: <input type="checkbox" ng-disabled="ddItemToEdit.IsFreetext === true" ng-model="ddItemToEdit.DisplayFreeTextInputField" /></div>
+                                                <div ng-show="ddItemToEdit.DisplayFreeTextInputField === true">Freetext Field Required: <input type="checkbox" ng-model="ddItemToEdit.DisplayFreeTextInputFieldRequired" /></div>
+                                            </div>                                        
+                                            <button class="fullWidth" ng-click="MoveDDItem('Up')">Move Up</button>
+                                            <button class="fullWidth" ng-click="MoveDDItem('Down')">Move Down</button>
+                                            <button class="fullWidth" ng-click="DeleteDDItem()">Delete</button>
+                                            <div ng-show="showDDListCopyPaste === true">
+                                                <button class="fullWidth" ng-click="copyDDItemCascadeItems()">Copy Child Items</button>
+                                                <button class="fullWidth"
+                                                        ng-show="clonedDDItemCascadeItems !== null && clonedDDItemCascadeItems !== undefined" ng-click="pasteDDItemCascadeItems()">Paste Child Items</button>
+                                                <button class="fullWidth" ng-click="copyDDItemJsonToClipBoard()">Copy To Clipboard</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align:right;">
+                                    <button ng-click="saveDDL()">Save</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*{{ddItemToEdit}}*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="border:2px solid #0db9f0; padding: 10px; min-height:400px;" ng-show="SelectedAdminAction.Value === 'ConfigureBankHolidays'">
+                        <div class="col-md-12">
+                            <h1>Configure Bank Holidays</h1>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <select title="bankHolidayYear"
+                                            name="bankHolidayYear"
+                                            id="bankHolidayYear"
+                                            class="form-control"
+                                            ng-model="selectedBankHolidayYear"
+                                            ng-options="choice as choice for choice in bankHolidayConfigYears"
+                                            ng-change="bankHolidayYearChange()"
+                                            style="width: 100% !important; min-width: 100% !important; max-width: 100% !important;"
+                                            required>                                    
+                                    </select>                                                                
+                                </div>
+                                <form name="bankHolidayForm" id="bankHolidayForm">  
+                                    <fieldset form="bankHolidayForm">
+                                        <div class="col-md-3">
+                                            <div class="row" ng-repeat="date in bankHolidayConfig track by $index">
+                                                <input kendo-date-picker
+                                                       class="kendodatepicker"
+                                                       k-options="monthSelectorOptions"
+                                                       k-ng-model="bankHolidayConfig[$index]"
+                                                       k-format="'dddd, MMMM dd, yyyy'"
+                                                       style="width: 100%;" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" >
+                                            <div class="row" ng-show="bankHolidayForm.$dirty">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button style="width:10em;" ng-click="saveBankHolidayDates()">Save</button>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <button style="width:10em;" ng-click="bankHolidayYearChange()">Reload</button>
+                                                        </div>
+                                                    </div>
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="border:2px solid #0db9f0; padding: 10px; min-height:400px;" ng-show="SelectedAdminAction.Value === 'RunReports'">
+                        <div class="col-md-4">
+                            <p><b>{{SelectedAdminAction.Key}}</b></p>
+                            <p>Select the to and from dates from the drop downs</p>
+                            <p>Then click the 'Get CSV' button</p>
+                            @*<p>{{TimeSheetReportConfig}}</p>*@
+                        </div>
+                        <form id="TimeSheetReport">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p><input type="checkbox" ng-model="TimeSheetReportConfig.TargetSpecificUser" /><b> Target Specific User</b></p>
+                                        <div ng-if="TimeSheetReportConfig.TargetSpecificUser === true">                                            
+                                            <p><b>Target User</b></p>
+                                            <p>
+                                                <input readonly required ng-required="true" ng-model="TimeSheetReportConfig.UserId" type="text" />
+                                                <button ng-click="TimeSheetReportConfig.UserId = treeUserSelection.UserDetails.SamAccountName">Set User</button>
+                                            </p>
+                                            <p><b>Report Target</b></p>
+                                            <p>
+                                                <select title="Year From" ng-options="ReportTarget.Value as ReportTarget.Key for ReportTarget in TimeSheetReportConfig.ReportTargetDropDown" ng-model="TimeSheetReportConfig.ReportTarget"></select>
+                                            </p>
+                                        </div>
+                                        <p><b>From</b></p>
+                                        <p>
+                                            <select required title="Month From" ng-options="Month.Value as Month.Key for Month in TimeSheetReportConfig.MonthsDropDown" ng-model="TimeSheetReportConfig.MonthFrom"></select>
+                                            <select title="Year From" ng-options="Years.Value as Years.Key for Years in TimeSheetReportConfig.YearsDropDown" ng-model="TimeSheetReportConfig.YearFrom"></select>
+                                        </p>
+                                        <p><b>To</b></p>
+                                        <p>
+                                            <select title="Month To" ng-options="Month.Value as Month.Key for Month in TimeSheetReportConfig.MonthsDropDown" ng-model="TimeSheetReportConfig.MonthTo"></select>
+                                            <select title="Year To" ng-options="Years.Value as Years.Key for Years in TimeSheetReportConfig.YearsDropDown" ng-model="TimeSheetReportConfig.YearTo"></select>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <button ng-click="CreateTimeSheetReport()">Get Report</button>
+                                    </div>                                                                                                          
+                                </div>                                
+                            </div>
+                        </form>
+                    </div>
+                    @*<button ng-show="MonthData.CascadingDropDownListOutOfDate === true">Refresh Drop Down List Values</button>*@
+                </div>
+            </div>            
+        </div>        
+    </div>
+</div>
+@*<h1>Is Dirty: {{timeSheetForm.$dirty}}</h1><h1>Is pristine: {{timeSheetForm.$pristine}}</h1><h1>Is invalid: {{timeSheetForm.$invalid}}</h1><h1>Is valid: {{timeSheetForm.$valid}}</h1><h1>Is submitted: {{timeSheetForm.$submitted}}</h1>*@
+@section Scripts{
+
+    <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-route.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/Helper.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/TechTimeSheet.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/Chart.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/angular-chart.min.js")"></script>    
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Slider/rzslider.min.js")"></script>    
+}

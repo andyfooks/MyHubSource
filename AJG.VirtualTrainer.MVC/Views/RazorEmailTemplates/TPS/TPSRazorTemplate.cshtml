@@ -1,0 +1,118 @@
+﻿@model string
+@using Newtonsoft.Json;
+@using System.Runtime;
+@using System.Linq;
+@functions {
+    public class ProspectInfo
+    {
+        public string Name { get; set; }
+        public string Number { get; set; }
+        public bool CanContact { get; set; }
+        public bool MatchedAgainstTPS { get; set; }
+        public bool MatchedAgainstCTPS { get; set; }
+        public DateTime? TPSLastUpdatedDateTime { get; set; }
+        public DateTime? CTPSLastUpdatedDateTime { get; set; }
+        public string ProspectFileName { get; set; }
+        public string ProspectFileFullPath { get; set; }
+        public DateTime ReadTime { get; set; }
+    }
+}
+@{ 
+    List<ProspectInfo> prospects = JsonConvert.DeserializeObject<List<ProspectInfo>>(@Model);
+}
+
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>TPS/CTPS Cross Reference Results</title>
+    </head>
+    <body>
+        <div>
+            <h1 style="color:#2D82F4">TPS / CTPS Cross Referencing</h1>
+            <br />
+            <p>Arthur J. Gallagher International - For further information, please contact Amanda_Bishop@ajg.com or Charles_Sherriff@ajg.com</p>
+            <table>
+                <tr>
+                    <td style="color:red;">APPROVAL STATUS</td>
+                    <td style="color:red;">NOT APPROVED</td>
+                    <td style="color:red;">Code: CTPS-A001</td>
+                </tr>
+                <tr style="min-height:3em;">
+                    <td style="color:red;">Date: @prospects.FirstOrDefault().CTPSLastUpdatedDateTime.GetValueOrDefault().ToString("dd/MM/yyyy");</td>
+                    <td style="color:black;">THIS DATA IS VALID FOR 28 DAYS FROM APPROVAL DATE - RE-SUBMIT DATA IF PROSPETING ACTIVITY CONTINUES BEYOND THIS TIME</td>
+                    <td style=""></td>
+                </tr>
+            </table>
+            <br />
+            <div>
+                <div style="width:32%;float:left;">
+                    <table style="background-color: gray; padding: 10px;">
+                        <thead>
+                            <tr style="text-align:center;">
+                                <td colspan="2" style="text-align:center;">THIS IS UNCLEANSED DATA</td>
+                            </tr>
+                            <tr style="text-align:center;">
+                                <td>Company / Prospect Name</td>
+                                <td>Telephone Number</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var prospect in prospects)
+                            {
+                                <tr>
+                                    <td style="background-color:white;">@prospect.Name</td>
+                                    <td style="background-color:white;">@prospect.Number</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width:32%;float:left;">
+                    <table style="background-color: Green; padding: 10px;">
+                        <thead>
+                            <tr style="text-align:center;">
+                                <td colspan="2" style="text-align:center;">THIS DATA MAY BE USED FOR PROSPECTING</td>
+                            </tr>
+                            <tr style="text-align:center;">
+                                <td>Company / Prospect Name</td>
+                                <td>Telephone Number</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var prospect in prospects.Where(p=>p.CanContact == true).ToList())
+                            {
+                                <tr>
+                                    <td style="background-color:white;">@prospect.Name</td>
+                                    <td style="background-color:white;">@prospect.Number</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width:32%; float:left;">
+                    <table style="background-color: orange; padding: 10px;">
+                        <thead>
+                            <tr style="text-align:center;">
+                                <td colspan="2" style="text-align:center;">THIS DATA MATCHES WITH TPS / CTPS RECORDS. IT <label style="color:red;">MUST NOT BE USED</label> FOR PROSPECTING</td>
+                            </tr>
+                            <tr style="text-align:center;">
+                                <td>Company / Prospect Name</td>
+                                <td>Telephone Number</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var prospect in prospects.Where(p => p.CanContact == false).ToList())
+                            {
+                                <tr>
+                                    <td style="background-color:white;">@prospect.Name</td>
+                                    <td style="background-color:white;">@prospect.Number</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

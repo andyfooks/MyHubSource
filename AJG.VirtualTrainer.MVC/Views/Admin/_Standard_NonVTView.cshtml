@@ -1,0 +1,237 @@
+﻿@model string
+<div id="tabstrip2" class="col-md-12 level2TabStrip">
+    <ul id="projectTabs" class="nav nav-tabs" role="tablist" style="margin-left:50px;">
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectUsersGridId);" class="active">
+            <a href="#projectUsersPanel" role="tab" data-toggle="tab">Users</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectRulesGridId);" class="">
+            <a href="#projectRulesPanel" role="tab" data-toggle="tab">Import Data</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigRolesGridId);" class="">
+            <a href="#projectEscalationsConfigPanel" role="tab" data-toggle="tab">Process Imported Data</a>
+        </li>
+
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectDbDetailsGridId);" class="">
+            <a href="#projectDbDetailsPanel" role="tab" data-toggle="tab">Target Databases</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectSchedulesGridId);" class="">
+            <a href="#projectSchedulesPanel" role="tab" data-toggle="tab">Schedules</a>
+        </li>
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectExclusionsGridId);" class="">
+            <a href="#projectExclusionsPanel" role="tab" data-toggle="tab">Exclusions</a>
+        </li>
+        @if (ViewBag.ExchangeRuleEnabled == "true")
+        {
+            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectExchangeAccountsGridId);" class="">
+                <a href="#projectExchangeAccountsPanel" role="tab" data-toggle="tab">Exchange Accounts</a>
+            </li>
+        }
+        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectBreachesGridId);" class="">
+            <a href="#projectBreachesPanel" role="tab" data-toggle="tab">Breaches</a>
+        </li>
+    </ul>
+    <div id="ProjectDetailsLevel1" class="tab-content" style="margin-left:50px;">
+        <div role="tabpanel" class="tab-pane active container-fluid" id="projectUsersPanel">
+            <div id="projectUsersGrid" style="font-size:small"><div class="k-grouping-header" data-role="droptarget" style="touch-action: none;">Drag a column header and drop it here to group by that column</div><div class="k-grid-header" style="padding-right: 14px;"><div class="k-grid-header-wrap k-auto-scrollable"><table role="grid"><colgroup><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:80px"><col style="width:170px"></colgroup><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader" data-field="Name" aria-haspopup="true" rowspan="1" data-title="Name" data-index="0" id="4995cd47-6600-454a-a916-c3e0dbbb168e" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Name</a></th><th scope="col" role="columnheader" data-field="DomainName" aria-haspopup="true" rowspan="1" data-title="Domain Name" data-index="1" id="828f08f4-54d5-4cbc-b9bd-f5b63eecdcff" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Domain Name</a></th><th scope="col" role="columnheader" data-field="Email" aria-haspopup="true" rowspan="1" data-title="Email" data-index="2" id="93f9d40c-dd15-4fc0-852e-f51ddd6e2231" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Email</a></th><th scope="col" role="columnheader" data-field="IsProjectAdmin" aria-haspopup="true" rowspan="1" data-title="Is Project Admin" data-index="3" id="1aff9085-6edf-485b-957f-feded9a67667" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Is Project Admin</a></th><th scope="col" role="columnheader" data-field="IsActive" aria-haspopup="true" rowspan="1" data-title="Is Active" data-index="4" id="e9215af1-0c70-44cb-a524-9407ba7c549f" class="k-header k-with-icon k-filterable" data-role="columnsorter"><a class="k-grid-filter" href="#" tabindex="-1"><span class="k-icon k-i-filter">Filter</span></a><a class="k-link" href="#">Is Active</a></th><th scope="col" id="5c36f7d8-897a-4acf-8529-c92ae5c7b8b0" rowspan="1" data-index="5" class="k-header">&nbsp;</th></tr></thead></table></div></div><div class="k-grid-content k-auto-scrollable" style="height: 299px;"><table role="grid" style="height: auto; touch-action: none;" data-role="selectable" class="k-selectable"><colgroup><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:120px"><col style="width:80px"><col style="width:170px"></colgroup><tbody role="rowgroup"><tr data-uid="89b8ba3a-34b5-49c4-a31c-2ff63bfb1f79" role="row" class="k-state-selected" aria-selected="true"><td role="gridcell">Andy Fooks</td><td role="gridcell">ANDYSURFACE\andy</td><td role="gridcell">andyfooks@live.com</td><td role="gridcell">true</td><td role="gridcell">true</td><td role="gridcell"><a class="k-button k-button-icontext k-grid-edit" href="#"><span class="k-icon k-i-edit"></span>Edit</a><a class="k-button k-button-icontext k-grid-delete" href="#"><span class="k-icon k-i-delete"></span>Remove</a></td></tr></tbody></table></div><div class="k-pager-wrap k-grid-pager k-widget k-floatwrap" data-role="pager"><a href="#" aria-label="Go to the first page" title="Go to the first page" class="k-link k-pager-nav k-pager-first k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-seek-w"></span></a><a href="#" aria-label="Go to the previous page" title="Go to the previous page" class="k-link k-pager-nav  k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-arrow-w"></span></a><ul class="k-pager-numbers k-reset"><li class="k-current-page"><span class="k-link k-pager-nav">1</span></li><li><span class="k-state-selected">1</span></li></ul><a href="#" aria-label="Go to the next page" title="Go to the next page" class="k-link k-pager-nav  k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-arrow-e"></span></a><a href="#" aria-label="Go to the last page" title="Go to the last page" class="k-link k-pager-nav k-pager-last k-state-disabled" data-page="1" tabindex="-1"><span class="k-icon k-i-seek-e"></span></a><span class="k-pager-info k-label">1 - 1 of 1 items</span></div></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectRulesPanel">
+            <div id="projectRulesGrid" style="font-size:small"></div>
+            <br />
+            <div id="tabstrip6" class="col-md-12">
+                <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="" class="active">
+                        <a href="#ruleConfigurations" role="tab" data-toggle="tab">SQL Import</a>
+                    </li>
+                    @if (ViewBag.ExchangeRuleEnabled == "true")
+                    {
+                        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleExchangeConfigurationsGridId);" class="">
+                            <a href="#ruleExchangeConfigurations" role="tab" data-toggle="tab">Exchange Import</a>
+                        </li>
+                    }
+                    @if (ViewBag.ExcelRuleEnabled == "true")
+                    {
+                        <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleExcelConfigurationsGridId);" class="">
+                            <a href="#ruleExcelConfigurations" role="tab" data-toggle="tab">Excel Import</a>
+                        </li>
+                    }
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="ruleConfigurations">
+                        <div id="ruleConfigurationsGrid" style="font-size:small"></div>
+                        <br />
+                        <div id="tabstrip7" class="col-md-12">
+                            <ul class="nav nav-tabs level4TabStrip" role="tablist" style="margin-left:50px;">
+
+                                <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlExclusionsInputGridIdId);" class="active">
+                                    <a href="#ruleConfigSqlInputPanel" role="tab" data-toggle="tab">Stored Proc Input Values</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content level4TabStrip" style="margin-left:50px;">
+                                <div role="tabpanel" class="tab-pane active container-fluid" id="ruleConfigSqlInputPanel">
+                                    <div id="tabstrip13" class="col-md-12">
+                                        <ul class="nav nav-tabs" role="tablist">
+
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlExclusionsInputGridId);" class="active">
+                                                <a href="#ruleSqlExclusionsInputPanel" role="tab" data-toggle="tab">Exclusions Group</a>
+                                            </li>
+                                            <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.ruleSqlHardCodedInputGridId);" class="">
+                                                <a href="#ruleSqlHardCodedInputPanel" role="tab" data-toggle="tab">Hard Coded</a>
+                                            </li>
+                                        </ul>
+                                        <div id="SystemUsersRoles" class="tab-content">
+
+                                            <div role="tabpanel" class="tab-pane active container-fluid" id="ruleSqlExclusionsInputPanel">
+                                                <div id="ruleSqlExclusionsInputGrid" style="font-size:small"></div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane container-fluid" id="ruleSqlHardCodedInputPanel">
+                                                <div id="ruleSqlHardCodedInputGrid" style="font-size:small"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane container-fluid" id="ruleExchangeConfigurations">
+                        <div id="ruleExchangeConfigurationsGrid" style="font-size:small"></div>
+                        <br />
+                        <div id="tabstripruleExchangeConfigMappings" class="col-md-12">
+                            <ul class="nav nav-tabs level4TabStrip" role="tablist" style="margin-left:50px;">
+                                <li role="presentation" onclick="" class="active">
+                                    <a href="#ruleExchangeConfigurationsExtractionsConfigPanel" role="tab" data-toggle="tab">Data Extraction Configurations</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content level4TabStrip" style="margin-left:50px;">
+                                <div role="tabpanel" class="tab-pane active container-fluid" id="ruleExchangeConfigurationsExtractionsConfigPanel">
+                                    <div id="ruleExchangeConfigExtractionItemsTable" style="font-size:small"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane container-fluid" id="ruleExcelConfigurations">
+                        <div id="ruleExcelConfigurationsGrid" style="font-size:small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationsConfigPanel">
+            <br />
+            <div id="tabstrip8" class="col-md-12" style="">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigGenericGridId);" class="active">
+                        <a href="#projectEscalationConfigGenericPanel" role="tab" data-toggle="tab">Email</a>
+                    </li>
+                    <li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigGSQLGridId);" class="">
+                        <a href="#projectEscalationConfigSQLPanel" role="tab" data-toggle="tab">SQL</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigGenericPanel">
+                        <div id="projectEscalationConfigGenericGrid" style="font-size:small"></div>
+                        <br />
+                        <div id="tabstrip100" class="col-md-12" style="">
+                            <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                                <li role="presentation" onclick="" class="active">
+                                @*<li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigGenericBreachSourceRuleGridId);" class="active">*@
+                                    <a href="#projectEscalationConfigGenericBreachSourcePanel" role="tab" data-toggle="tab">Breach Sources</a>
+                                </li>
+                                @*<li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigGenericEscalationsHistoryGridId);" class="">
+                                    <a href="#projectEscalationConfigGenericEscalationsHistoryPanel" role="tab" data-toggle="tab">Escalations History</a>
+                                </li>*@
+                            </ul>
+                            <div class="tab-content" style="margin-left:50px;">
+                                <div role="tabpanel" class="tab-pane level3TabStrip container-fluid" id="projectEscalationConfigGenericBreachSourcePanel">
+                                    <br />
+                                    <div id="tabstrip10 level3TabStrip" class="col-md-12">
+                                        <ul class="nav active nav-tabs" role="tablist">
+                                            <li role="presentation" onclick="" class="active">
+                                            @*<li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigGenericBreachSourceRuleGridId);" class="active">*@
+                                                <a href="#projectEscalationConfigGenericBreachSourceRulePanel" role="tab" data-toggle="tab">Rules</a>
+                                            </li>
+                                            @*<li role="presentation" onclick="app.admin.LoadGridForTabClick(app.admin.pageVarsPri().tags.projectEscalationConfigGenericBreachSourceRuleConfigGridId);" class="">
+                                                <a href="#projectEscalationConfigGenericBreachSourceRuleConfigPanel" role="tab" data-toggle="tab">Rule Configurations</a>
+                                            </li>*@
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigGenericBreachSourceRulePanel">
+                                                <div id="projectEscalationConfigGenericBreachSourceRuleGrid" style="font-size:small"></div>
+                                            </div>
+                                            @*<div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigGenericBreachSourceRuleConfigPanel">
+                                                <div id="projectEscalationConfigGenericBreachSourceRuleConfigGrid" style="font-size:small"></div>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigGenericEscalationsHistoryPanel">
+                                    <div style="" id="projectEscalationConfigGenericEscalationsHistoryPanelContent">
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane container-fluid" id="projectEscalationConfigSQLPanel">
+                        <div id="projectEscalationConfigGSQLGrid" style="font-size:small"></div>
+                        <br />
+                   
+                        <div id="tabstrip100" class="col-md-12" style="">
+                            <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                                <li role="presentation" onclick="" class="active">
+                                    <a href="#projectEscalationConfigSQLBreachSourcePanel" role="tab" data-toggle="tab">Breach Sources</a>
+                                </li>                               
+                            </ul>
+                            <div class="tab-content" style="margin-left:50px;">
+                                <div role="tabpanel" class="tab-pane level3TabStrip container-fluid" id="projectEscalationConfigSQLBreachSourcePanel">
+                                    <br />
+                                    <div id="tabstrip10 level3TabStrip" class="col-md-12">
+                                        <ul class="nav active nav-tabs" role="tablist">
+                                            <li role="presentation" onclick="" class="active">
+                                                <a href="#projectEscalationConfigSQLBreachSourceRulePanel" role="tab" data-toggle="tab">Rules</a>
+                                            </li>                                           
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active container-fluid" id="projectEscalationConfigSQLBreachSourceRulePanel">
+                                                <div id="projectEscalationConfigSQLBreachSourceRuleGrid" style="font-size:small"></div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectDbDetailsPanel">
+            <div id="projectDbDetailsGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectSchedulesPanel">
+            <div id="projectSchedulesGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectExclusionsPanel">
+            <div id="projectExclusionsGrid" style="font-size:small"></div>
+            <br />
+            <div id="tabstrip12" class="col-md-12">
+                <ul class="nav nav-tabs level3TabStrip" role="tablist" style="margin-left:50px;">
+                    <li role="presentation" onclick="" class="active">
+                        <a href="#projectExclusionItemsPanel" role="tab" data-toggle="tab">Exclusions Items</a>
+                    </li>
+                </ul>
+                <div class="tab-content level3TabStrip" style="margin-left:50px;">
+                    <div role="tabpanel" class="tab-pane active container-fluid" id="projectExclusionItemsPanel">
+                        <div id="projectExclusionItemsGrid" style="font-size:small"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectExchangeAccountsPanel">
+            <div id="projectExchangeAccountsGrid" style="font-size:small"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane container-fluid" id="projectBreachesPanel">
+            <div id="projectBreachesGrid" style="font-size:small"></div>
+        </div>
+    </div>
+</div>
+
+
+

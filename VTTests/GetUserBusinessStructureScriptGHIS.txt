@@ -1,0 +1,69 @@
+﻿USE [VirtualTrainer]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetUserBusinessStructure]    Script Date: 01/12/2016 14:57:42 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[GetUserBusinessStructureGHIS]
+
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	declare @orgKey nvarchar(max), @orgName nvarchar(max)
+	
+	SET @orgKey = (SELECT o.organisation_key 
+                  FROM [dm_Acturis_GHIS].[dbo].[organisation] o
+                 WHERE o.organisation_type != -1)
+
+	SET @orgName = (SELECT o.organisation_name 
+                  FROM [dm_Acturis_GHIS].[dbo].[organisation] o
+                 WHERE o.organisation_type != -1)
+
+	select ch.[account_handler_key] as HandlerKey,
+            ch.[account_handler_name] as HandlerName,
+            u.[user_name] as UserName,
+			@orgKey as OrganisationKey,
+			@orgName as OrganisationName,
+            ch.[account_handler_status_key] as HandlerStatusKey,
+            hs.[description] as HandlerStatusDescription,
+            u.[user_status_key] as UserStatusKey,
+            us.[description] as UserDescription,
+            ch.[handler_office_key] as HandlerOfficeKey,
+            t.[team_status_key] as TeamStatusKey,
+            ts.[description] as TeamStatusDescription,
+            t.[team_name] as TeamName,
+            t.[task_team_office_key] as TeamOfficeKey,
+            o.[task_exec_office_key] as OfficeKey,
+            o.[task_exec_office_name] as OfficeName,
+            ch.[email] as HandlerEmail,
+            u.[email] as UserEmail
+		FROM [dm_Acturis_GHIS].[dbo].[account_handler] as ch
+		left Join [dm_Acturis_GHIS].[dbo].[account_handler_status] as hs on (ch.account_handler_status_key = hs.account_handler_status_key)
+		left join [dm_Acturis_GHIS].[dbo].[entered_by_user] as u on (ch.user_ref = u.entered_by_user_key)
+		left join [dm_Acturis_GHIS].[dbo].[user_status] as us on (u.[user_status_key] = us.user_status_key)
+		left join [dm_Acturis_GHIS].[dbo].[task_team] as t on (u.income_team_key = t.task_team_key)
+		left join [dm_Acturis_GHIS].[dbo].[task_exec_office] as o on (t.[task_team_office_key] = o.[task_exec_office_key])
+		left join [dm_Acturis_GHIS].[dbo].[team_status] as ts on (t.[team_status_key] = ts.team_status_key)
+		where ch.[account_handler_key] != -1
+
+	--where u.[user_status_key] = 1
+	order by HandlerKey
+END
+
+
+GO
+
+

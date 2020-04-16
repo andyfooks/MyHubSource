@@ -1,0 +1,120 @@
+﻿@model VirtualTrainer.EscalationsFrameworkConfigEmailRazorModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style type="text/css">
+        #rec_head {
+            color: #007a29;
+            font-family: arial, verdana;
+            font-size: 12px;
+        }
+
+        #rule_head {
+            font-size: 14px;
+            font: bold;
+        }
+
+        #level_head {
+            margin-left: 3em;
+            font-size: 13px;
+            font: bold;
+        }
+
+        #handler_head {
+            margin-left: 2em;
+            font-size: 13px;
+            font: bold;
+        }
+
+            #handler_head p {
+                margin-bottom: 5px;
+            }
+
+        #level_msg {
+            margin-left: 3em;
+            font-size: 13px;
+        }
+
+            #level_msg p {
+                margin-top: 5px;
+                margin-bottom: 0;
+                padding: 0;
+            }
+
+        p.alt1 {
+            background-color: #ffffff;
+        }
+
+        p.alt2 {
+            background-color: #DCFAFD;
+        }
+
+        .firstNotification {
+            color: #379937;
+        }
+
+        .reminder {
+            color: #a2b543;
+        }
+
+        .branchManager {
+            color: #fc6b0a;
+        }
+
+        .qualityAuditor {
+            color: #fc160a;
+        }
+
+        .thirdReminders {
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="rec_head">
+            <p>Regional Managing Director's Notification</p>
+            <p>Following inconsistencies have been discovered during the processing of the Virtual Trainer Rules and have not yet been resolved by the responsible account handler.</p>
+            <p>Kind Regards<br />@Model.SentFromName</p>
+        </div>
+        @if (Model.BreachLogs.Any())
+        {
+            Model.SendEmail = false;
+            foreach (var rule in Model.BreachLogs.GroupBy(a => a.RuleID))
+            {
+                <div id="rule_head">
+                    <p>@rule.FirstOrDefault().RuleDescription</p>
+                </div>
+                foreach (var handler in @rule.ToList().OrderBy(u => u.UserName).GroupBy(a => a.UserId))
+                {
+                    var diasplayUserName = true;
+
+                    foreach (var breach in handler.ToList().OrderBy(o => o.BreachLiveContextRefCount))
+                    {
+                        if (breach.BreachLiveContextRefCount >= 4)
+                        {
+                            if (diasplayUserName)
+                            {
+                                <div id="handler_head"><p>@handler.FirstOrDefault().UserName (@handler.FirstOrDefault().OfficeName, @handler.FirstOrDefault().ActurisOrganisationName)</p></div>
+                                diasplayUserName = false;
+                            }
+                            <div id="level_msg" class="thirdReminders">
+                                <p class="alt1">(@breach.ActurisInstanceFriendlyName) @breach.BreachDisplayAlternateText, Notified @breach.BreachLiveContextRefCount times since issue first discovered on @breach.FirstBreachDate.ToString("dd-MMM-yyyy")</p>
+                            </div>
+                            Model.SendEmail = true;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            Model.SendEmail = false;
+        }
+    </div>
+</body>
+</html>

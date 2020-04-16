@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<link href="~/Content/MyHub.css" rel="stylesheet" />
+<link href="~/Content/kendo/2016.3.1118/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/2016.3.1118/kendo.default.min.css" rel="stylesheet" />
+<link href="~/Content/rzslider.min.css" rel="stylesheet" />
+
+<div ng-controller="MyHubController" ng-init="CanOverrideUser='@(ViewBag.User.IsSystemSuperUser)'">
+    <div ng-show="formDisabled || loadingReportData === true || SkipLoadingChartData === true" class="overlay">
+        <div class="spinner">            
+            <img style="height:75px;" src="~/Content/Images/spinner.gif" />
+        </div>
+    </div>
+    <div ng-show="userdetailsloaded" ng-cloak="">
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                <div ng-show="CanOverrideUser">
+                    <select ng-model="devSelectedOverrideUser" ng-change="loadUserDetails()" ng-options="x.UserDetails.FullName for x in devOverrideUsers"></select>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div id="messages" style="width: 14%; position: fixed; z-index: 1030; top: 60px; right: 10px;"></div>     
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-2">
+                <div class="row" ng-show="devSelectedOverrideUser.HasManagess === true">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input style="width:100%;" placeholder="Load User in Tree" type="text" ng-model="treeSearchUser" />
+                            </div>
+                            <div class="col-md-2">
+                                <button ng-show="treeSearchUser !== undefined && treeSearchUser !== null && treeSearchUser !== '' && treeSearchUser.length > 2" ng-click="LoadSpecificTreeUser(treeSearchUser)">Load</button>
+                            </div>
+                            <div class="col-md-2">
+                                <label ng-show="LoadSpecificTreeUserData.matchedCount > 1" ng-click="LoadSpecificTreeUserData = null;treeSearchUser = ''">Clear</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" id="treeMultiUsersFoundDiv"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" ng-show="LoadSpecificTreeUserData.matchedCount > 1">                                                                                               
+                                <div class="row">                                    
+                                    <div class="col-md-12">
+                                        <button title="{{user.UserSummaryInfo}}" ng-repeat="user in LoadSpecificTreeUserData.MatchedUsers" ng-click="LoadSpecificTreeUser(user.id)">{{user.UserDisplayName}}</button>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>                             
+                <div>
+                    <div id="tree" style="max-height:800px; overflow-y:auto;" kendo-tree-view="tree" k-data-source="treeData" k-on-change="treeUserSelection = dataItem; UpdateReport()">                        
+                        <span k-template>
+                            <label title="{{dataItem.UserSummaryInfo}}">{{dataItem.UserDetails.FullName || dataItem.UserDetails.SamAccountName}}</label>
+                        </span>
+                    </div>                                                          
+                </div>
+            </div>                    
+            <div class="col-md-10">               
+                <div class="row">
+                    <div class="col-md-10">
+                        <rzslider ng-disabled="formDisabled" rz-slider-model="DateRangeSlider.minValue"
+                                  rz-slider-high="DateRangeSlider.maxValue"
+                                  rz-slider-options="DateRangeSlider.options"></rzslider>                                              
+                    </div>                   
+                    <div class="col-md-2"></div>
+                </div>
+                <br />
+                <div class="row">        
+                    <div class="col-md-2 text-left">
+                        <select ng-change="reportDDChanged('SetReportScope')" ng-disabled="formDisabled" style="width:100%" name='systems' id="systems" class="form-control" ng-model="selectedSystem" ng-options="system as system.ItemText for system in systems" required></select>
+                    </div>
+                    <div class="col-md-2 text-left">
+                        <select ng-change="reportDDChanged('SetReport')" ng-disabled="formDisabled" style="width:100%" name='reportScopes' id="reportScopes" class="form-control" ng-model="selectedReportScope" ng-options="reportScope as reportScope.ItemText for reportScope in selectedSystem.CascadeItems" required></select>
+                    </div>
+                    <div class="col-md-3 text-left">
+                        <select ng-disabled="formDisabled" style="width:100%;min-width:100%" name='reportNames' id="reportNames" class="form-control" ng-model="selectedReportName" ng-options="reportName as reportName.ItemText for reportName in reportNames" required></select>
+                    </div>                               
+                    <div class="col-md-3 text-right">
+                        <button ng-disabled="!(selectedSystem && selectedReportScope && selectedReportName) || formDisabled" style="width:100%; height:100%;" ng-click="UpdateReport()">Update</button>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    </div>
+                </div>
+                <br />
+                <div class="row">                                       
+                    <div class="col-md-12">        
+                        <div class="row" ng-if="(ChartData.UserDTO.id !== treeUserSelection.UserDetails.SamAccountName) && formDisabled === false">
+                            <div class="col-md-12 alert-danger">
+                                <p>The Information below is not for the User Selected in the Tree!</p>
+                                <p>Please try again. Contact Help desk if the issue continues.</p>                                                                        
+                            </div>
+                        </div>                
+                        <div class="row" ng-show="ChartData.showTable === true">
+                            <div class="col-md-10 text-center" style="max-height:550px; overflow-y:auto;">
+                                <table style="width:100%" ng-show="ChartData.data.ColumnDataTypes.length === 0">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td ng-repeat="label in ChartData.data.labels">{{label}}</td>
+                                            <td ng-show="ChartData.calculateRowTotals === true">Total</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                        
+                                        <tr ng-style="{'font-weight':(dataSet.FontWeight)}" ng-repeat="dataSet in ChartData.data.datasets | filter:{'IsFinancialData':false}">
+                                            <td>{{dataSet.label}}</td>
+                                            <td ng-style="{'color':(dataSet.label === 'Data (MB)' && data > 5000 && dataSet.SetColor === true ? 'red' : 'black')}" ng-repeat="data in dataSet.data track by $index">{{data}}</td>
+                                            <td ng-show="ChartData.calculateRowTotals === true">{{GetRowTotal(dataSet.data)}}</td>
+                                        </tr>
+                                        <tr ng-style="{'font-weight':(dataSet.FontWeight)}" style="font-weight:bold" ng-repeat="dataSet in ChartData.data.datasets | filter:{'IsFinancialData':true}">
+                                            <td>{{dataSet.label}}</td>
+                                            <td ng-repeat="data in dataSet.data track by $index">{{data | currency: '£'}}</td>
+                                            <td ng-show="ChartData.calculateRowTotals === true">{{GetRowTotal(dataSet.data) | currency: '£'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>   
+                                @* This table if the data subjects re per row, and columns could be different data types. *@
+                                <table style="width:100%" ng-show="ChartData.data.ColumnDataTypes.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td ng-repeat="label in ChartData.data.labels">
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        {{label}}
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div title="Order Descending" class="glyphicon glyphicon-sort-by-order" ng-click="sortChartDatasets(this, 'descending')"></div>
+                                                        <div title="Order Ascending" class="glyphicon glyphicon-sort-by-order-alt" ng-click="sortChartDatasets(this, 'ascending')"></div>                                                         
+                                                    </div>
+                                                </div> 
+                                            </td>                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                       
+                                        <tr ng-repeat="dataSet in ChartData.data.datasets">
+                                            <td>{{dataSet.label}}</td>
+                                            <td ng-repeat="data in dataSet.data track by $index">
+                                                <div ng-show="ChartData.data.ColumnDataTypes[$index] === 'financial'">{{data | currency: '£'}}</div>
+                                                <div ng-show="ChartData.data.ColumnDataTypes[$index] !== 'financial'">{{data}}</div>
+                                            </td>                                            
+                                        </tr>
+                                    </tbody>
+                                </table>                                                                                    
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>                        
+                        <div class="row" ng-show="ChartData.showGraph === true">
+                            <div id="masterChartContainer" class="col-md-10">
+                                <canvas id="masterChart" height="120"></canvas>                              
+                            </div>
+                            <div class="col-md-2">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div ng-show="ChartData.showGraph === true">
+                                    <label>Chart Override: </label>
+                                    <select ng-model="ChartType" ng-change="ChartDataOverridden()" ng-options="x for x in graphTypes"></select>
+                                </div>                              
+                            </div>
+                            <div class="col-md-3">
+                                <button ng-click="downloadReport()">Export to csv</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="@Url.Content("~/Scripts/angular.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/angular-route.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/MyHub/MyHubApp.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/Chart.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Charts/angular-chart.min.js")"></script>    
+    <script src="@Url.Content("~/Scripts/kendo/2016.3.1118/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Slider/rzslider.min.js")"></script>
+}

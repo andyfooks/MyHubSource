@@ -1,0 +1,123 @@
+﻿@model VirtualTrainer.EscalationsFrameworkConfigEmailRazorModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name='viewport' content='width=device-width' />
+    <title></title>
+    <style type='text/css'>
+        #rec_head {
+            color: #007a29;
+            font-family: arial, verdana;
+            font-size: 12px;
+        }
+        #rule_head {
+            font-size: 14px;
+            font: bold;
+        }
+        #level_head {
+            margin-left: 3em;
+            font-size: 13px;
+            font: bold;
+        }
+        #handler_head {
+            margin-left: 2em;
+            font-size: 13px;
+            font: bold;
+        }
+        #handler_head p {
+            margin-bottom: 5px;
+        }
+        #level_msg {
+            margin-left: 3em;
+            font-size: 13px;
+        }
+        #level_msg p {
+            margin-top: 5px;
+            margin-bottom: 0;
+            padding: 0;
+        }
+        p.alt1 {
+            background-color: #ffffff;
+        }
+        p.alt2 {
+            background-color: #DCFAFD;
+        }
+        .firstNotification {
+            color: #379937;
+        }
+        .reminder {
+            color: #a2b543
+        }
+        .branchManager {
+            color: #fc6b0a;
+        }
+        .qualityAuditor {
+            color: #fc160a;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id='rec_head'>
+            @if (@Model.Recipient.Name.Contains(','))
+            {
+                <p>
+                    Hi @Model.Recipient.Name.Split(',')[1].Trim(' '),
+                </p>
+            }
+            else
+            {
+                <p>
+                    Hi @Model.Recipient.Name,
+                </p>
+            }
+            <p>the following inconsistencies have been picked up during the processing of the Virtual Trainer Rules. If you were audited by the QA this would be picked up. Please update the system where appropriate as soon as possible.</p>
+            <p>If you are unsure of how to correct any of the information, click <a href='file:///\\emea\emeadata\Giles Share1\Department\Business Engagement Team\Virtual Trainer'>here</a> for simple 'How to's for each of the Rules.</p>
+            <p>Colour coding explained:
+                <ul>
+                    <li class='firstNotification'>First notification</li>
+                    <li class='reminder'>Your own reminder (BM will be notified next time)</li>
+                    <li class='branchManager'>Branch Manager Notified (QA and RMD will be notified next time)</li>
+                    <li class='qualityAuditor'>Quality Advisor and Regional Managing Director Notified</li>
+                </ul>
+            </p>
+            <p>
+                If you have any queries please contact your super user.
+            </p><p>Kind Regards<br />@Model.SentFromName</p>
+        </div>
+        @if (Model.BreachLogs.Any())
+        {
+            foreach (var rule in Model.BreachLogs.GroupBy(a => a.RuleID))
+            {
+                <div id='rule_head'><p>@rule.FirstOrDefault().RuleDescription</p><p>@rule.FirstOrDefault().RuleAdditionalDescription</p></div>
+                foreach (var breach in rule.ToList().OrderBy(o => o.BreachLiveContextRefCount))
+                {
+                    if (breach.BreachLiveContextRefCount == 1)
+                    {
+                        <div id='level_msg' class='firstNotification'><p class='alt1'>(@breach.ActurisInstanceFriendlyName) @breach.BreachDisplayText</p></div>
+                    }
+                    else if (breach.BreachLiveContextRefCount == 2)
+                    {
+                        <div id='level_msg' class='reminder'><p class='alt1'>(@breach.ActurisInstanceFriendlyName) @breach.BreachDisplayText</p></div>
+                    }
+                    else if (breach.BreachLiveContextRefCount == 3)
+                    {
+                        <div id='level_msg' class='branchManager'><p class='alt1'>(@breach.ActurisInstanceFriendlyName) @breach.BreachDisplayText</p></div>
+                    }
+                    else
+                    {
+                        <div id='level_msg' class='qualityAuditor'><p class='alt1'>(@breach.ActurisInstanceFriendlyName) @breach.BreachDisplayText</p></div>
+                    }
+                }
+                Model.SendEmail = true;
+            }
+        }
+        else
+        {
+            Model.SendEmail = false;
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+﻿[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+body {
+    font-size: 12px !important;
+}
+
+/* Tech Time Sheet */
+
+.sticky {    
+    position: fixed;
+    top: 50px;
+    z-index: 1000;
+    margin-right:40px;
+}
+.form-control {
+    font-size:12px;
+    height: 28px;
+}
+.animate-show-hide.ng-hide {
+  opacity: 0;
+}
+
+.animate-show-hide.ng-hide-add,
+.animate-show-hide.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.check-element {
+  opacity: 1;
+  padding: 10px;
+}
+
+.fullWidth {
+    width:100%!important;
+    min-width:100%!important;
+    max-width:100%!important;
+}
+/*Tech Time Sheet*/
+
+thead, .categoryColumn {
+    font-weight: Bolder;
+}
+
+/*.rotateText{    
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);  
+    -ms-transform: rotate(-90deg);  
+    -o-transform: rotate(-90deg);  
+    transform: rotate(-90deg);
+}*/
+
+.timesheetbutton
+ {
+     width:150px;
+ }
+#tree .k-state-selected {
+    background-color:#0db9f0 !important;
+}
+
+table, th, td {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+#timeSheetTable table, th, td {
+    padding: 2px;
+}
+#timeSheetTable td {
+    width:3em;
+}
+.hideMe {
+    position:absolute;
+    left:-999999px;
+}
+.userdetails{
+  padding:5px;
+  /*initial info element not shown*/
+  /*left:-999999px;
+  position:absolute;*/
+  background-color: lightgray;
+  z-index:1000;
+}
+
+.info
+{
+  width:160px;
+  height:90px;
+  text-align:center;
+  border:1px solid #ddd;
+  padding:20px;
+  position:absolute;
+  /*initial info element not shown*/
+  left:-999999px;
+  background-color: lightgray;
+}
+
+table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.6);
+    z-index:1000;
+}
+
+.spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index:1100;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

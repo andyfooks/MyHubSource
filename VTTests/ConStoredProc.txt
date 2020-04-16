@@ -1,0 +1,62 @@
+﻿USE [VirtualTrainer]
+GO
+
+/****** Object:  StoredProcedure [dbo].[LogCONBreaches]    Script Date: 02/11/2016 09:39:17 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE [dbo].[LogCONBreaches]
+	-- Add the parameters for the stored procedure here
+	 @handlerEmail nvarchar(60),
+	 @exclusions varchar(max)
+AS
+BEGIN
+	
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+    CREATE TABLE #TEMP (ContextRef decimal,
+						BreachDisplayHTML varchar(max),
+						RuleBreachFieldOne varchar(max),
+						RuleBreachFieldTwo varchar(max),
+						RuleBreachFieldThree varchar(max),
+						RuleBreachFieldFour varchar(max))
+
+	INSERT INTO #TEMP select distinct 
+						cp.contact_people_key, 
+						'<div>' + 'Primary Contact: ' + COALESCE(cp.name, 'No Name') + ': ' + COALESCE(cp.email, 'No Email')  + ', for Client: ' + c.name + ', has missing information.' + '</div>',  
+						cp.salutation, 
+						cp.home_phone, 
+						cp.work_phone, 
+						cp.mobile from 
+	[dm_Acturis_Lloyds_60].[dbo].[client] c 
+	join [dm_Acturis_Lloyds_60].[dbo].[client_handler_bridge] chb on chb.client_key = c.client_key
+	join [dm_Acturis_Lloyds_60].[dbo].[account_handler] ah on chb.account_handler_key = ah.account_handler_key
+	join [dm_Acturis_Lloyds_60].[dbo].[contact_people] cp on c.client_key = cp.client_key
+	where ah.email = @handlerEmail
+	and cp.primary_indicator_key = 1
+	and chb.primary_handler_key = 1
+	and (
+		(cp.salutation is null or (cp.home_phone is null and cp.work_phone is null and cp.mobile is null))
+		or
+		(cp.email not like '%_@_%.__%' and lower(cp.email) <> 'np@giles.com' and lower(cp.email) <> 'np@giles.co.uk')
+	)
+	and cp.contact_people_key not in (
+            SELECT CAST(Item AS INTEGER)
+            FROM dbo.SplitString(@exclusions, ',')
+      )
+
+	select * from #TEMP
+
+END
+
+GO
